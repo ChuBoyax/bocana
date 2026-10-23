@@ -50,7 +50,6 @@ export function Footer() {
               <Magnetic strength={0.45}>
                 <SiteLink
                   href="/#stays"
-                  data-cursor="Go"
                   className="group flex h-36 w-36 flex-col items-center justify-center gap-2 rounded-full bg-lagoon text-center text-sm font-semibold text-sand-soft transition-transform duration-700 ease-out-expo hover:scale-105 md:h-44 md:w-44"
                 >
                   <ArrowIcon className="h-5 w-5 transition-transform duration-700 ease-out-expo group-hover:-rotate-45" />

@@ -11,8 +11,6 @@ export function NextStay({ stay }: { stay: Stay }) {
     <section className="bg-sand px-3 pb-3 md:px-6 md:pb-6">
       <SiteLink
         href={`/stays/${stay.slug}`}
-       
-        data-cursor="Next"
         className="group relative block overflow-hidden rounded-[32px] bg-jungle px-6 py-16 text-sand md:px-12 md:py-24"
       >
         <div className="absolute inset-0 [clip-path:inset(100%_0_0_0)] transition-[clip-path] duration-[1.1s] ease-in-out-quart group-hover:[clip-path:inset(0_0_0_0)]">

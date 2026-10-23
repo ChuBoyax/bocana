@@ -28,7 +28,6 @@ export function Gallery({ images, title }: { images: GalleryImage[]; title: stri
             key={image.src}
             type="button"
             onClick={() => setOpen(i)}
-            data-cursor="View"
             aria-label={`Open photo ${i + 1} of ${images.length}`}
             className={cn(
               "group relative overflow-hidden bg-jungle/10",

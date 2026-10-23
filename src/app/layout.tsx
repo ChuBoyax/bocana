@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Manrope } from "next/font/google";
-import { Cursor } from "@/components/cursor";
 import { Footer } from "@/components/footer";
 import { Nav } from "@/components/nav";
 import { Providers } from "@/components/providers";
@@ -56,7 +55,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Nav />
           <main id="main">{children}</main>
           <Footer />
-          <Cursor />
         </Providers>
         <div className="grain" aria-hidden />
       </body>
