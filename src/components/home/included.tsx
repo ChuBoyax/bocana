@@ -12,15 +12,19 @@ import { RevealText } from "../ui/reveal-text";
 export function Included() {
   return (
     <section id="included" className="bg-sand px-5 pt-28 pb-10 md:px-10 md:pt-40">
-      <div className="mx-auto grid max-w-[1400px] gap-14 lg:grid-cols-12 lg:gap-16">
+      <div className="mx-auto max-w-[1400px]">
+        {/* Full width so the heading stays on one line. */}
+        <SectionLabel index="03">Included</SectionLabel>
+        <RevealText
+          text="Little luxuries, *included.*"
+          className="font-display mt-6 text-[clamp(2.1rem,4.4vw,4.25rem)] leading-[0.95] tracking-tight text-balance"
+        />
+      </div>
+
+      <div className="mx-auto mt-6 grid max-w-[1400px] gap-14 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
-          <SectionLabel index="03">Included</SectionLabel>
-          <RevealText
-            text="Little luxuries, *included.*"
-            className="font-display mt-6 text-[clamp(2.6rem,5.5vw,5rem)] leading-[0.95] tracking-tight"
-          />
           <Reveal delay={0.15}>
-            <p className="mt-6 max-w-md text-lg text-jungle/70">
+            <p className="max-w-md text-lg text-jungle/70">
               Every bungalow, apartment and the home share the same waterfront complex, and the same easy island extras.
             </p>
           </Reveal>
@@ -38,7 +42,7 @@ export function Included() {
           </Reveal>
         </div>
 
-        <ul className="grid content-start gap-px self-start overflow-hidden rounded-[32px] bg-jungle/10 sm:grid-cols-2 lg:col-span-7 lg:mt-24">
+        <ul className="grid content-start gap-px self-start overflow-hidden rounded-[32px] bg-jungle/10 sm:grid-cols-2 lg:col-span-7">
           {perks.map((perk, i) => (
             <motion.li
               key={perk.title}

@@ -81,6 +81,8 @@ function StayCard({ stay, index, progress }: { stay: Stay; index: number; progre
   return (
     <SiteLink
       href={`/stays/${stay.slug}`}
+      // Fetch the whole stay page ahead of the click (production only), not just its shell.
+      prefetch
       className="group relative flex aspect-[3/4] w-[80vw] shrink-0 snap-start flex-col overflow-hidden rounded-[28px] bg-jungle-deep ring-1 ring-sand/10 transition-shadow duration-700 hover:ring-sand/25 sm:w-[46vw] md:h-[min(58svh,36vw)] md:w-auto"
     >
       {/* Photo on top, details on a solid panel below so the text never fights the image. */}

@@ -51,7 +51,7 @@ export function CheckIn() {
           <div className="md:col-span-9">
             <RevealText
               text="Finding your way home is *easy.*"
-              className="font-display text-[clamp(2.6rem,6vw,5.5rem)] leading-[0.95] tracking-tight"
+              className="font-display text-[clamp(2.1rem,4.4vw,4.25rem)] leading-[0.95] tracking-tight text-balance"
             />
             <Reveal delay={0.2}>
               <p className="mt-6 max-w-xl text-lg text-jungle/70">
