@@ -13,13 +13,12 @@ type Token =
 const words = (text: string): Token[] => text.split(" ").map((word) => ({ word }));
 
 const tokens: Token[] = [
-  ...words("Tucked into a quiet corner of Bocas Town"),
+  ...words("La Bocana is a quiet waterfront retreat in Bocas Town"),
   { pill: { src: "/images/hero-waterfront.jpg", alt: "La Bocana's bungalows seen from the water", position: "50% 60%" } },
-  ...words("La Bocana is a small waterfront collection of"),
+  { word: "—" },
   { word: "bungalows,", accent: "italic" },
-  ...words("apartments and a home. Walk to every restaurant in town, then come back for sunset views and a swim off the dock"),
+  ...words("apartments and a home, steps from every restaurant and right on the"),
   { pill: { src: "/images/listings/561068/37.jpg", alt: "The sundeck on the water", position: "50% 55%" } },
-  ...words("in the warm"),
   { word: "Caribbean.", accent: "lagoon" },
 ];
 
