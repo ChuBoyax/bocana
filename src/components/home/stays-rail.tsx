@@ -99,31 +99,34 @@ function StayCard({ stay, index, progress }: { stay: Stay; index: number; progre
       href={`/stays/${stay.slug}`}
      
       data-cursor="View"
-      className="group relative block aspect-[3/4] w-[80vw] shrink-0 snap-start overflow-hidden rounded-[28px] bg-jungle-deep sm:w-[46vw] md:h-[min(58svh,36vw)] md:w-auto"
+      className="group relative flex aspect-[3/4] w-[80vw] shrink-0 snap-start flex-col overflow-hidden rounded-[28px] bg-jungle-deep ring-1 ring-sand/10 transition-shadow duration-700 hover:ring-sand/25 sm:w-[46vw] md:h-[min(58svh,36vw)] md:w-auto"
     >
-      <motion.div style={{ x: innerX }} className="absolute inset-y-0 -inset-x-[10%]">
-        <div className="absolute inset-0 transition-transform duration-[1.4s] ease-out-expo group-hover:scale-[1.07]">
-          <StayMedia stay={stay} sizes="(min-width: 768px) 32vw, 80vw" />
+      {/* Photo on top, details on a solid panel below so the text never fights the image. */}
+      <div className="relative min-h-0 flex-1 overflow-hidden">
+        <motion.div style={{ x: innerX }} className="absolute inset-y-0 -inset-x-[10%]">
+          <div className="absolute inset-0 transition-transform duration-[1.4s] ease-out-expo group-hover:scale-[1.07]">
+            <StayMedia stay={stay} sizes="(min-width: 768px) 32vw, 80vw" />
+          </div>
+        </motion.div>
+
+        <div className="absolute inset-x-0 top-0 h-24 bg-linear-to-b from-jungle-deep/50 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-12 bg-linear-to-t from-jungle-deep/40 to-transparent" />
+
+        <div className="absolute inset-x-4 top-4 flex items-center justify-between text-sand">
+          <span className="font-display text-base italic tabular-nums">{String(index + 1).padStart(2, "0")}</span>
+          <span className="rounded-full bg-jungle-deep/45 px-3 py-1 text-[10px] font-semibold tracking-[0.22em] uppercase backdrop-blur-md">
+            {stay.kind === "Pair" ? "Two bungalows" : stay.kind}
+          </span>
         </div>
-      </motion.div>
-
-      <div className="absolute inset-0 bg-linear-to-t from-jungle-deep/90 via-jungle-deep/10 to-transparent" />
-      <div className="absolute inset-x-0 top-0 h-1/4 bg-linear-to-b from-jungle-deep/45 to-transparent" />
-
-      <div className="absolute inset-x-5 top-5 flex items-center justify-between text-sand">
-        <span className="font-display text-lg italic">{String(index + 1).padStart(2, "0")}</span>
-        <span className="rounded-full bg-sand/15 px-3 py-1 text-[10px] font-semibold tracking-[0.22em] uppercase backdrop-blur-md">
-          {stay.kind === "Pair" ? "Two bungalows" : stay.kind}
-        </span>
       </div>
 
-      <div className="absolute inset-x-5 bottom-5 text-sand">
-        <h3 className="font-display text-[clamp(1.9rem,2.6vw,2.6rem)] leading-none tracking-tight">{stay.label}</h3>
-        <p className="font-display mt-2 text-base text-lagoon-soft italic">{stay.name}</p>
-        <p className="mt-3 text-xs text-sand/75">{stayFacts(stay.listing)}</p>
-        <div className="mt-4 flex items-center justify-between border-t border-sand/20 pt-4">
-          <p className="text-sm text-sand/75">
-            From <span className="font-display text-2xl text-sand">{formatPrice(stay.listing)}</span> / night
+      <div className="shrink-0 px-5 pt-5 pb-5 text-sand md:px-6">
+        <h3 className="font-display truncate text-[clamp(1.5rem,1.9vw,1.9rem)] leading-tight tracking-tight">{stay.label}</h3>
+        <p className="font-display mt-1 truncate text-sm text-lagoon-soft italic">{stay.name}</p>
+        <p className="mt-3 text-xs tracking-wide text-sand/60">{stayFacts(stay.listing)}</p>
+        <div className="mt-4 flex items-center justify-between border-t border-sand/10 pt-4">
+          <p className="text-xs text-sand/60">
+            From <span className="font-display text-xl text-sand">{formatPrice(stay.listing)}</span> / night
           </p>
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sand text-jungle transition-all duration-700 ease-out-expo group-hover:-rotate-45 group-hover:bg-lagoon group-hover:text-sand">
             <ArrowIcon className="h-4 w-4" />
