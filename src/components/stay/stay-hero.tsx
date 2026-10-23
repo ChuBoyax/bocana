@@ -1,9 +1,9 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { EASE_OUT_EXPO } from "@/lib/cn";
-import { formatPrice, stayFacts, type Stay } from "@/lib/stays";
+import { formatPrice, type Stay } from "@/lib/stays";
 import { SiteLink } from "../navigation";
 import { StayMedia } from "../stay-art";
 import { ArrowIcon } from "../ui/bits";
@@ -17,6 +17,7 @@ export function StayHero({ stay }: { stay: Stay }) {
   const mediaY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-45%"]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
+  const { listing } = stay;
 
   const fadeUp = (delay: number) => ({
     initial: { opacity: 0, y: 20 },
@@ -24,8 +25,24 @@ export function StayHero({ stay }: { stay: Stay }) {
     transition: { duration: 1.1, delay, ease: EASE_OUT_EXPO },
   });
 
+  const details: { label: string; value: ReactNode }[] = [
+    { label: "Guests", value: listing.guests },
+    { label: listing.bedrooms === 1 ? "Bedroom" : "Bedrooms", value: listing.bedrooms },
+    { label: listing.bathrooms === 1 ? "Bath" : "Baths", value: listing.bathrooms },
+    ...(listing.rating !== null ? [{ label: "Rating", value: <Rating value={listing.rating} /> }] : []),
+    {
+      label: "From",
+      value: (
+        <>
+          {formatPrice(listing)}
+          <span className="font-sans text-xs text-sand/60"> / night</span>
+        </>
+      ),
+    },
+  ];
+
   return (
-    <section ref={ref} className="relative h-svh min-h-[620px] overflow-hidden bg-jungle-deep text-sand">
+    <section ref={ref} className="relative h-svh min-h-[640px] overflow-hidden bg-jungle-deep text-sand">
       <motion.div style={{ scale: mediaScale, y: mediaY }} className="absolute inset-0">
         <motion.div
           className="absolute inset-0"
@@ -36,50 +53,61 @@ export function StayHero({ stay }: { stay: Stay }) {
           <StayMedia stay={stay} sizes="100vw" preload />
         </motion.div>
       </motion.div>
-      <div className="absolute inset-0 bg-linear-to-t from-jungle-deep via-jungle-deep/40 to-jungle-deep/30" />
+      {/* Darker at the foot and on the left, where the text sits; the photo stays clear top right. */}
+      <div className="absolute inset-0 bg-linear-to-t from-jungle-deep via-jungle-deep/50 to-jungle-deep/25" />
+      <div className="absolute inset-0 bg-linear-to-r from-jungle-deep/70 via-jungle-deep/20 to-transparent" />
 
       <motion.div
         style={{ y: textY, opacity: textOpacity }}
-        className="relative z-10 mx-auto flex h-full max-w-[1400px] flex-col justify-end px-5 pb-12 md:px-10 md:pb-20"
+        className="relative z-10 mx-auto flex h-full max-w-[1400px] flex-col px-5 pt-28 pb-10 md:px-10 md:pt-32 md:pb-14"
       >
         <motion.div {...fadeUp(0.1)}>
           <SiteLink
             href="/#stays"
-            className="group inline-flex items-center gap-2 rounded-full bg-sand/10 px-4 py-2 text-xs font-semibold tracking-[0.2em] uppercase backdrop-blur-md transition-colors hover:bg-sand hover:text-jungle"
+            className="group inline-flex items-center gap-2 rounded-full border border-sand/20 bg-jungle-deep/30 px-4 py-2 text-[11px] font-semibold tracking-[0.2em] uppercase backdrop-blur-md transition-colors hover:border-sand hover:bg-sand hover:text-jungle"
           >
-            <ArrowIcon direction="left" className="h-4 w-4 transition-transform duration-500 group-hover:-translate-x-1" />
+            <ArrowIcon direction="left" className="h-3.5 w-3.5 transition-transform duration-500 group-hover:-translate-x-1" />
             All stays
           </SiteLink>
         </motion.div>
 
-        <motion.p {...fadeUp(0.2)} className="mt-10 text-[11px] font-semibold tracking-[0.32em] text-sand/75 uppercase">
-          {stay.kind === "Pair" ? "Two bungalows" : stay.kind} · Bocas Town
-        </motion.p>
+        <div className="mt-auto max-w-4xl">
+          <motion.p
+            {...fadeUp(0.2)}
+            className="flex items-center gap-3 text-[11px] font-semibold tracking-[0.32em] text-sand/80 uppercase"
+          >
+            <span className="h-px w-8 bg-lagoon-soft" />
+            {stay.kind === "Pair" ? "Two bungalows" : stay.kind} · Bocas Town
+          </motion.p>
 
-        <h1 className="font-display mt-4 text-[clamp(3.4rem,11vw,11rem)] leading-[0.86] tracking-[-0.04em]">
-          <span className="sr-only">
-            {stay.label}, {stay.name}
-          </span>
-          <span className="block overflow-hidden pb-[0.08em]">
-            <SplitChars text={stay.label} show delay={0.25} stagger={0.035} />
-          </span>
-        </h1>
-        <motion.p {...fadeUp(0.7)} className="font-display wonk mt-3 text-[clamp(1.5rem,3vw,2.5rem)] text-lagoon-soft italic">
-          {stay.name}
-        </motion.p>
+          <h1 className="font-display mt-5 text-[clamp(2.75rem,6.5vw,6.5rem)] leading-[0.92] tracking-[-0.03em]">
+            <span className="sr-only">
+              {stay.label}, {stay.name}
+            </span>
+            <span className="block overflow-hidden pb-[0.1em]">
+              <SplitChars text={stay.label} show delay={0.25} stagger={0.035} />
+            </span>
+          </h1>
+          <motion.p {...fadeUp(0.7)} className="font-display wonk mt-2 text-[clamp(1.25rem,2.2vw,1.9rem)] text-lagoon-soft italic">
+            {stay.name}
+          </motion.p>
+        </div>
 
         <motion.div
           {...fadeUp(0.9)}
-          className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-sand/20 pt-6 text-sm text-sand/85"
+          className="mt-10 flex flex-col gap-6 border-t border-sand/20 pt-6 lg:flex-row lg:items-end lg:justify-between"
         >
-          <span>{stayFacts(stay.listing)}</span>
-          {stay.listing.rating !== null && <Rating value={stay.listing.rating} className="font-semibold" />}
-          <span>
-            From <span className="font-semibold text-sand">{formatPrice(stay.listing)}</span> / night
-          </span>
+          <dl className="grid grid-cols-3 gap-x-4 gap-y-5 md:flex md:divide-x md:divide-sand/20">
+            {details.map((detail) => (
+              <div key={detail.label} className="flex flex-col gap-2 md:px-6 md:first:pl-0 lg:px-8">
+                <dt className="text-[10px] font-semibold tracking-[0.24em] text-sand/60 uppercase">{detail.label}</dt>
+                <dd className="font-display text-2xl leading-none whitespace-nowrap tabular-nums">{detail.value}</dd>
+              </div>
+            ))}
+          </dl>
           <SiteLink
             href="#book"
-            className="ml-auto hidden items-center gap-2 rounded-full bg-sand px-6 py-3.5 text-sm font-semibold text-jungle transition-colors duration-500 hover:bg-lagoon hover:text-sand-soft md:inline-flex"
+            className="hidden shrink-0 items-center gap-2 self-start rounded-full lg:self-auto bg-sand px-6 py-3.5 text-sm font-semibold text-jungle transition-colors duration-500 hover:bg-lagoon hover:text-sand-soft md:inline-flex"
           >
             Book this stay
             <ArrowIcon direction="down" className="h-4 w-4" />

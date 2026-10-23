@@ -52,8 +52,10 @@ export default async function StayPage({ params }: PageProps<"/stays/[slug]">) {
     <>
       <StayHero stay={stay} />
 
-      <section className="bg-sand px-3 pt-3 md:px-6 md:pt-6">
-        <Gallery images={stay.gallery} title={`${stay.label} · ${stay.name}`} />
+      <section className="bg-sand px-5 pt-5 md:px-10 md:pt-10">
+        <div className="mx-auto max-w-[1400px]">
+          <Gallery images={stay.gallery} title={`${stay.label} · ${stay.name}`} />
+        </div>
       </section>
 
       <section className="bg-sand px-5 py-20 md:px-10 md:py-28">

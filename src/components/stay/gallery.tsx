@@ -4,7 +4,7 @@ import { useLenis } from "lenis/react";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { cn, EASE_IN_OUT, EASE_OUT_EXPO } from "@/lib/cn";
+import { cn, EASE_OUT_EXPO } from "@/lib/cn";
 import type { GalleryImage } from "@/lib/stays";
 import { ArrowIcon } from "../ui/bits";
 
@@ -16,45 +16,41 @@ export function Gallery({ images, title }: { images: GalleryImage[]; title: stri
 
   return (
     <>
-      <motion.div
-        className="relative grid grid-cols-2 gap-2 overflow-hidden rounded-[28px] md:h-[min(72svh,660px)] md:grid-cols-4 md:grid-rows-2 md:gap-3"
-        initial={{ clipPath: "inset(8% 8% 8% 8% round 40px)", opacity: 0 }}
-        whileInView={{ clipPath: "inset(0% 0% 0% 0% round 28px)", opacity: 1 }}
-        viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-        transition={{ duration: 1.3, ease: EASE_IN_OUT }}
-      >
-        {preview.map((image, i) => (
-          <button
-            key={image.src}
-            type="button"
-            onClick={() => setOpen(i)}
-            aria-label={`Open photo ${i + 1} of ${images.length}`}
-            className={cn(
-              "group relative overflow-hidden bg-jungle/10",
-              i === 0 ? "col-span-2 aspect-[4/3] md:row-span-2 md:aspect-auto" : "aspect-square md:aspect-auto",
-              i > 2 && "hidden md:block",
-            )}
-          >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              sizes={i === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 50vw"}
-              preload={i === 0}
-              className="object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-105"
-            />
-          </button>
-        ))}
-
-        <button
-          type="button"
-          onClick={() => setOpen(0)}
-          className="absolute right-4 bottom-4 inline-flex items-center gap-2 rounded-full bg-sand px-5 py-3 text-sm font-semibold text-jungle shadow-lg transition-colors duration-500 hover:bg-jungle hover:text-sand"
-        >
-          <GridIcon />
-          Show all {images.length} photos
-        </button>
-      </motion.div>
+      <div className="grid grid-cols-2 gap-2 md:h-[min(70svh,640px)] md:grid-cols-4 md:grid-rows-2 md:gap-3">
+        {preview.map((image, i) => {
+          // The last tile shown at each size doubles as the way into every photo.
+          const moreOnMobile = i === 2 && images.length > 3;
+          const moreOnDesktop = i === preview.length - 1 && images.length > preview.length;
+          return (
+            <motion.button
+              key={image.src}
+              type="button"
+              onClick={() => setOpen(i)}
+              aria-label={moreOnDesktop ? `Show all ${images.length} photos` : `Open photo ${i + 1} of ${images.length}`}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+              transition={{ duration: 1, delay: i * 0.08, ease: EASE_OUT_EXPO }}
+              className={cn(
+                "group relative overflow-hidden rounded-2xl bg-jungle/10 md:rounded-[20px]",
+                i === 0 ? "col-span-2 aspect-[4/3] md:row-span-2 md:aspect-auto" : "aspect-square md:aspect-auto",
+                i > 2 && "hidden md:block",
+              )}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes={i === 0 ? "(min-width: 1480px) 700px, (min-width: 768px) 50vw, 100vw" : "(min-width: 1480px) 350px, (min-width: 768px) 25vw, 50vw"}
+                preload={i === 0}
+                className="object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-105"
+              />
+              {moreOnMobile && <MorePhotos count={images.length - 3} className="flex md:hidden" />}
+              {moreOnDesktop && <MorePhotos count={images.length - preview.length} className="hidden md:flex" />}
+            </motion.button>
+          );
+        })}
+      </div>
 
       <AnimatePresence>
         {open !== null && <Lightbox images={images} title={title} start={open} onClose={close} />}
@@ -212,6 +208,23 @@ function NavButton({ side, onClick }: { side: "left" | "right"; onClick: () => v
     >
       <ArrowIcon direction={side} className="h-5 w-5" />
     </button>
+  );
+}
+
+function MorePhotos({ count, className }: { count: number; className: string }) {
+  return (
+    <span
+      className={cn(
+        "absolute inset-0 flex-col items-center justify-center gap-2 bg-jungle-deep/55 text-sand transition-colors duration-500 group-hover:bg-jungle-deep/70",
+        className,
+      )}
+    >
+      <span className="font-display text-4xl leading-none md:text-5xl">+{count}</span>
+      <span className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.22em] uppercase">
+        <GridIcon />
+        All photos
+      </span>
+    </span>
   );
 }
 

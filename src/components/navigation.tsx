@@ -33,6 +33,30 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const lenis = useLenis();
   const pendingHash = useRef<{ path: string; hash: string } | null>(null);
+  const previousPath = useRef(pathname);
+  const wentBack = useRef(false);
+
+  useEffect(() => {
+    const onPop = () => {
+      // Hash-only history steps stay on the same page and never reach the effect below.
+      if (window.location.pathname !== previousPath.current) wentBack.current = true;
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  // A new page starts at the top. Lenis can still be gliding towards the old page's scroll target
+  // (cards in the stays rail are often clicked mid-scroll) and would carry the new page down to its footer.
+  // Back/forward and #anchor navigations keep their own position.
+  useEffect(() => {
+    if (previousPath.current === pathname) return;
+    previousPath.current = pathname;
+    const back = wentBack.current;
+    wentBack.current = false;
+    if (back || pendingHash.current?.path === pathname) return;
+    if (lenis) lenis.scrollTo(0, { immediate: true, force: true });
+    else window.scrollTo(0, 0);
+  }, [pathname, lenis]);
 
   const navigate = useCallback<Navigate>(
     (href) => {
