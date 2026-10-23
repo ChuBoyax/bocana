@@ -88,7 +88,7 @@ export function Stepper({
         </svg>
 
         {/* Centred on its point of the route, pitching about the waterline as it rides the swell. */}
-        <motion.div aria-hidden className="pointer-events-none absolute top-0.5 z-10 w-16 -translate-x-1/2 -translate-y-full" style={{ left, y }}>
+        <motion.div aria-hidden className="pointer-events-none absolute top-0.5 z-10 w-[42px] -translate-x-1/2 -translate-y-full" style={{ left, y }}>
           <motion.div className="origin-bottom" style={{ rotate: pitch }}>
             <motion.div animate={{ scaleX: facing }} transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }}>
               <Sailboat speed={speed} />
@@ -112,14 +112,14 @@ export function Stepper({
                 >
                   <span
                     className={cn(
-                      "relative flex h-9 w-9 items-center justify-center rounded-full text-sm font-semibold transition-all duration-700",
+                      "relative flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold transition-all duration-700",
                       done && "bg-lagoon-soft text-jungle-deep group-hover:scale-110",
-                      active && "bg-sand text-jungle-deep shadow-[0_0_0_6px_rgba(143,217,207,0.25)]",
+                      active && "bg-sand text-jungle-deep shadow-[0_0_0_5px_rgba(143,217,207,0.25)]",
                       !done && !active && (reachable ? "bg-jungle-soft text-sand" : "bg-jungle-deep text-sand/40 ring-1 ring-sand/20"),
                     )}
                   >
                     {done ? (
-                      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                         <path d="M5 12.5l4.5 4.5L19 7.5" />
                       </svg>
                     ) : (
@@ -128,7 +128,7 @@ export function Stepper({
                   </span>
                   <span
                     className={cn(
-                      "absolute top-12 text-[10px] font-semibold tracking-[0.2em] whitespace-nowrap uppercase transition-colors md:text-[11px]",
+                      "absolute top-8 text-[10px] font-semibold tracking-[0.2em] whitespace-nowrap uppercase transition-colors md:text-[11px]",
                       active ? "text-sand" : "text-sand/45",
                     )}
                   >
@@ -154,7 +154,7 @@ function Sailboat({ speed }: { speed: MotionValue<number> }) {
   const wakeLength = useTransform(way, [0, 1], [0.3, 1]);
 
   return (
-    <svg viewBox="0 0 64 52" className="block h-[52px] w-16 overflow-visible drop-shadow-[0_8px_10px_rgba(0,0,0,0.3)]">
+    <svg viewBox="0 0 64 52" className="block h-[34px] w-[42px] overflow-visible drop-shadow-[0_8px_10px_rgba(0,0,0,0.3)]">
       <defs>
         <linearGradient id="sloop-main" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stopColor="#e4dac8" />

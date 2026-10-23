@@ -117,7 +117,7 @@ export function BookingFlow() {
     setReached((r) => Math.max(r, next));
     // Bring the new step's top into view, below the nav and the sticky steps.
     const top = card.current?.getBoundingClientRect().top ?? 0;
-    if (top < 240 && card.current) lenis?.scrollTo(card.current, { offset: -236, duration: 1.1 });
+    if (top < 208 && card.current) lenis?.scrollTo(card.current, { offset: -204, duration: 1.1 });
   }
 
   // Move focus to the new step's heading for keyboard and screen reader users.
@@ -165,7 +165,7 @@ export function BookingFlow() {
 
   return (
     <>
-      <section className="relative overflow-hidden rounded-b-[40px] bg-jungle-deep px-5 pt-32 pb-[21.5rem] text-sand md:rounded-b-[64px] md:px-10 md:pt-40">
+      <section className="relative overflow-hidden rounded-b-[40px] bg-jungle-deep px-5 pt-32 pb-[19.5rem] text-sand md:rounded-b-[64px] md:px-10 md:pt-40">
         <div className="mx-auto max-w-[1400px] text-center">
           <p className="text-[11px] font-semibold tracking-[0.32em] text-sand/60 uppercase">Book direct · La Bocana</p>
           <h1 className="font-display mt-5 text-[clamp(3rem,8vw,7rem)] leading-[0.9] tracking-[-0.03em]">
@@ -175,13 +175,13 @@ export function BookingFlow() {
           {!done && <p className="mx-auto mt-5 max-w-md text-sand/70">Four quick steps, and you&apos;re on your way to the water.</p>}
         </div>
         {/* Where the steps sit until the page scrolls past them. */}
-        <div ref={stickLine} aria-hidden className="absolute inset-x-0 bottom-[18rem] h-px" />
+        <div ref={stickLine} aria-hidden className="absolute inset-x-0 bottom-[16rem] h-px" />
       </section>
 
       {/* The steps stay in view while the form scrolls: pinned under the nav, or to the very top while it's away. */}
       <div
         className={cn(
-          "sticky top-(--nav-offset) z-30 -mt-[18rem] bg-jungle-deep pt-14 pb-9 text-sand transition-[top,border-radius,box-shadow] duration-700 ease-out-expo",
+          "sticky top-(--nav-offset) z-30 -mt-[16rem] bg-jungle-deep pt-9 pb-6 text-sand transition-[top,border-radius,box-shadow] duration-700 ease-out-expo",
           stuck && "rounded-b-[28px] shadow-[0_24px_40px_-24px_rgba(4,20,15,0.75)]",
         )}
       >
@@ -305,7 +305,7 @@ export function BookingFlow() {
               </div>
             </div>
 
-            <aside className="lg:sticky lg:top-[calc(var(--nav-offset)+9.5rem)] lg:col-span-4 lg:transition-[top] lg:duration-700 lg:ease-out-expo">
+            <aside className="lg:sticky lg:top-[calc(var(--nav-offset)+7.5rem)] lg:col-span-4 lg:transition-[top] lg:duration-700 lg:ease-out-expo">
               <BookingSummary stay={stay} start={dates.start} end={dates.end} nights={nights} guests={guests} />
               {stay && totalGuests > stay.listing.guests && (
                 <p className="mt-3 text-center text-sm text-red-700">This stay sleeps up to {stay.listing.guests}.</p>

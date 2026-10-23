@@ -82,7 +82,7 @@ export function StepDates({
       </fieldset>
 
       <div className="mt-8 rounded-[28px] p-5 ring-1 ring-jungle/12 md:p-7">
-        <RangeCalendar start={start} end={end} onChange={onDates} />
+        <RangeCalendar start={start} end={end} onChange={onDates} months={1} className="mx-auto max-w-md" />
       </div>
 
       <div className="mt-4 grid gap-px overflow-hidden rounded-[24px] bg-jungle/12 sm:grid-cols-3">

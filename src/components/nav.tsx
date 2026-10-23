@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { cn, EASE_IN_OUT, EASE_OUT_EXPO } from "@/lib/cn";
 import { navLinks, site } from "@/lib/site";
 import { SiteLink } from "./navigation";
-import { Logo } from "./ui/bits";
+import { ArrowIcon, Logo } from "./ui/bits";
 import { Magnetic } from "./ui/magnetic";
 
 export function Nav() {
@@ -77,15 +77,7 @@ export function Nav() {
           <div className="flex items-center gap-2">
             <div className="hidden sm:block">
               <Magnetic>
-                <SiteLink
-                  href={onStayPage ? "#book" : "/book"}
-                  className={cn(
-                    "group inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors duration-500",
-                    glass ? "bg-jungle text-sand hover:bg-lagoon" : "bg-sand text-jungle hover:bg-lagoon hover:text-sand",
-                  )}
-                >
-                  <RollingLabel>Book now</RollingLabel>
-                </SiteLink>
+                <BookButton href={onStayPage ? "#book" : "/book"} tone={glass ? "dark" : "light"} />
               </Magnetic>
             </div>
 
@@ -117,6 +109,53 @@ export function Nav() {
 
       <AnimatePresence>{open && <MobileMenu onClose={() => setOpen(false)} />}</AnimatePresence>
     </>
+  );
+}
+
+// One wave of the tide's crest, tiled along its top edge; the "lap" animation slides it one tile (16px) and loops.
+const CREST = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 6'%3E%3Cpath d='M0 6V3q4-3 8 0t8 0v3z' fill='%2317a39b'/%3E%3C/svg%3E")`;
+
+/**
+ * The booking call to action. On hover the lagoon rises through it from below, a wave lapping along its
+ * crest, and the arrow turns toward the water. `light` sits on the dark hero, `dark` on the frosted nav.
+ */
+function BookButton({
+  href,
+  tone,
+  onClick,
+  className,
+}: {
+  href: string;
+  tone: "light" | "dark";
+  onClick?: () => void;
+  className?: string;
+}) {
+  return (
+    <SiteLink
+      href={href}
+      onClick={onClick}
+      className={cn(
+        "group relative isolate inline-flex items-center gap-3 overflow-hidden rounded-full py-1.5 pr-5 pl-1.5 text-sm font-semibold transition-colors duration-500 hover:text-sand-soft focus-visible:text-sand-soft",
+        tone === "light" ? "bg-sand text-jungle" : "bg-jungle text-sand",
+        className,
+      )}
+    >
+      <span
+        aria-hidden
+        className="absolute inset-0 -z-10 translate-y-[125%] bg-lagoon transition-transform duration-700 ease-out-expo group-hover:translate-y-0 group-focus-visible:translate-y-0"
+      >
+        <span className="absolute -top-[5px] left-0 h-1.5 w-[calc(100%+16px)] motion-safe:animate-lap" style={{ backgroundImage: CREST, backgroundSize: "16px 6px" }} />
+      </span>
+      <span
+        className={cn(
+          "flex h-9 w-9 items-center justify-center rounded-full transition-all duration-700 ease-out-expo group-hover:-rotate-45 group-hover:bg-sand-soft group-hover:text-jungle",
+          tone === "light" ? "bg-jungle text-sand" : "bg-sand text-jungle",
+        )}
+      >
+        <ArrowIcon className="h-4 w-4" />
+      </span>
+      <RollingLabel>Book now</RollingLabel>
+    </SiteLink>
   );
 }
 
@@ -177,13 +216,7 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             Get directions
           </a>
         </div>
-        <SiteLink
-          href="/book"
-          onClick={onClose}
-          className="shrink-0 rounded-full bg-lagoon px-6 py-4 font-semibold text-sand-soft"
-        >
-          Book now
-        </SiteLink>
+        <BookButton href="/book" tone="light" onClick={onClose} className="shrink-0" />
       </motion.div>
     </motion.div>
   );
