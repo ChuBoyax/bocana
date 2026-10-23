@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { BookingFlow } from "@/components/booking/booking-flow";
+import { BookingFlow, BookingIntro } from "@/components/booking/booking-flow";
 
 export const metadata: Metadata = {
   title: "Book your stay",
@@ -20,11 +20,8 @@ export default function BookPage() {
 function BookingShell() {
   return (
     <>
-      <section className="rounded-b-[40px] bg-jungle-deep px-5 pt-32 pb-[21.5rem] text-center text-sand md:rounded-b-[64px] md:pt-40">
-        <p className="text-[11px] font-semibold tracking-[0.32em] text-sand/60 uppercase">Book direct · La Bocana</p>
-        <h1 className="font-display mt-5 text-[clamp(3rem,8vw,7rem)] leading-[0.9] tracking-[-0.03em]">
-          Book your <span className="wonk text-lagoon-soft italic">stay.</span>
-        </h1>
+      <section className="rounded-b-[40px] bg-jungle-deep px-5 pt-32 pb-[19.5rem] text-sand md:rounded-b-[64px] md:px-10 md:pt-40">
+        <BookingIntro done={false} />
       </section>
       <section className="relative z-10 -mt-28 px-3 pb-24 md:px-6">
         <div className="mx-auto h-[70svh] max-w-[1400px] animate-pulse rounded-[32px] bg-sand-soft" />

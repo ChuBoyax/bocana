@@ -187,6 +187,49 @@ export function CalendarIcon() {
   );
 }
 
+export function StarIcon() {
+  return (
+    <svg {...iconProps}>
+      <path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z" />
+    </svg>
+  );
+}
+
+export function ShieldIcon() {
+  return (
+    <svg {...iconProps}>
+      <path d="M12 3l7 3v5.5c0 4.3-2.9 7.9-7 9.5-4.1-1.6-7-5.2-7-9.5V6l7-3Z" />
+      <path d="M9 12l2.2 2.2L15.5 10" />
+    </svg>
+  );
+}
+
+export function KeyIcon() {
+  return (
+    <svg {...iconProps}>
+      <circle cx="8" cy="15.5" r="4" />
+      <path d="M11 12.5l8.5-8.5M16.5 7l2.5 2.5M14.5 9l2 2" />
+    </svg>
+  );
+}
+
+export function BoatIcon() {
+  return (
+    <svg {...iconProps}>
+      <path d="M12 3v12M12 4.5l6 9.5h-6M3.5 17.5h17l-2.2 3H5.7z" />
+    </svg>
+  );
+}
+
+export function WifiIcon() {
+  return (
+    <svg {...iconProps}>
+      <path d="M3 9.5a13 13 0 0 1 18 0M6 13a8.5 8.5 0 0 1 12 0M9 16.5a4 4 0 0 1 6 0" />
+      <circle cx="12" cy="19.5" r="0.6" fill="currentColor" />
+    </svg>
+  );
+}
+
 export function GuestsIcon() {
   return (
     <svg {...iconProps}>

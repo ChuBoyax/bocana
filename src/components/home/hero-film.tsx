@@ -253,7 +253,7 @@ function FinalContent({ revealed }: { revealed: boolean }) {
         </span>
       </h1>
 
-      <motion.p {...fadeUp(revealed, 0.55)} className="mt-3 max-w-xl text-base font-medium text-balance text-sand md:mt-4 md:text-lg">
+      <motion.p {...fadeUp(revealed, 0.55)} className="mt-3 max-w-xl text-base font-medium text-balance text-sand md:mt-4 md:text-lg lg:max-w-none lg:whitespace-nowrap">
         {site.tagline} Waterfront bungalows, apartments and a home in a quiet corner of Bocas Town.
       </motion.p>
 

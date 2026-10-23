@@ -18,10 +18,11 @@ import {
   type Guests,
 } from "@/lib/booking";
 import { cn, EASE_OUT_EXPO } from "@/lib/cn";
-import { getStay } from "@/lib/stays";
+import { getStay, stays } from "@/lib/stays";
 import { ArrowIcon } from "../ui/bits";
 import { StepDates, StepDetails, StepReview, StepStay } from "./booking-steps";
 import { BookingSummary, Confirmation } from "./booking-summary";
+import { BoatIcon, KeyIcon, PinIcon, ShieldIcon, StarIcon, WifiIcon } from "./fields";
 import { Stepper } from "./stepper";
 
 const STEPS = ["Dates", "Stay", "Details", "Review"];
@@ -166,14 +167,7 @@ export function BookingFlow() {
   return (
     <>
       <section className="relative overflow-hidden rounded-b-[40px] bg-jungle-deep px-5 pt-32 pb-[19.5rem] text-sand md:rounded-b-[64px] md:px-10 md:pt-40">
-        <div className="mx-auto max-w-[1400px] text-center">
-          <p className="text-[11px] font-semibold tracking-[0.32em] text-sand/60 uppercase">Book direct · La Bocana</p>
-          <h1 className="font-display mt-5 text-[clamp(3rem,8vw,7rem)] leading-[0.9] tracking-[-0.03em]">
-            {done ? "See you on the " : "Book your "}
-            <span className="wonk text-lagoon-soft italic">{done ? "water." : "stay."}</span>
-          </h1>
-          {!done && <p className="mx-auto mt-5 max-w-md text-sand/70">Four quick steps, and you&apos;re on your way to the water.</p>}
-        </div>
+        <BookingIntro done={done} />
         {/* Where the steps sit until the page scrolls past them. */}
         <div ref={stickLine} aria-hidden className="absolute inset-x-0 bottom-[16rem] h-px" />
       </section>
@@ -202,7 +196,8 @@ export function BookingFlow() {
           />
         ) : (
           <div className="mx-auto grid max-w-[1400px] items-start gap-6 lg:grid-cols-12">
-            <div ref={card} className="rounded-[32px] bg-sand p-6 shadow-[0_30px_80px_-40px_rgba(7,34,25,0.45)] ring-1 ring-jungle/10 md:p-10 lg:col-span-8">
+            {/* min-w-0: lets wide rows inside (the stay filters) scroll instead of stretching the page on phones. */}
+            <div ref={card} className="min-w-0 rounded-[32px] bg-sand p-6 shadow-[0_30px_80px_-40px_rgba(7,34,25,0.45)] ring-1 ring-jungle/10 md:p-10 lg:col-span-8">
               <AnimatePresence mode="wait" custom={direction} initial={false}>
                 <motion.div
                   key={step}
@@ -252,55 +247,73 @@ export function BookingFlow() {
                 </motion.div>
               </AnimatePresence>
 
-              <div className="mt-10 flex flex-col-reverse items-stretch gap-4 border-t border-jungle/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
-                {step > 0 ? (
-                  <button
-                    type="button"
-                    onClick={() => goTo(step - 1)}
-                    className="group inline-flex items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-semibold ring-1 ring-jungle/20 transition-colors hover:ring-jungle"
-                  >
-                    <ArrowIcon direction="left" className="h-4 w-4 transition-transform duration-500 group-hover:-translate-x-1" />
-                    Back
-                  </button>
-                ) : (
-                  <span className="hidden sm:block" />
-                )}
+              {/* Floats at the foot of the screen while a long step (the stays) scrolls, so Continue is always in reach. */}
+              <div className="sticky bottom-3 z-20 mt-10">
+                <AnimatePresence>
+                  {hint && (
+                    <motion.p
+                      role="alert"
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="mb-2 rounded-full bg-sand-soft px-4 py-2 text-center text-sm text-red-700 shadow-sm ring-1 ring-red-700/15 sm:hidden"
+                    >
+                      {hint}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
 
-                <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:gap-5">
-                  <AnimatePresence>
-                    {hint && (
-                      <motion.p
-                        role="alert"
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0 }}
-                        className="text-center text-sm text-red-700 sm:text-right"
-                      >
-                        {hint}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                  <button
-                    type="button"
-                    onClick={next}
-                    disabled={status === "sending"}
-                    className={cn(
-                      "group inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 text-sm font-semibold transition-colors duration-500",
-                      step === 3 ? "bg-lagoon text-sand-soft hover:bg-jungle" : "bg-jungle text-sand hover:bg-lagoon",
-                      status === "sending" && "cursor-wait opacity-80",
-                    )}
-                  >
-                    {status === "sending" ? (
-                      <>
-                        <Spinner /> Sending request…
-                      </>
-                    ) : (
-                      <>
-                        {step === 3 ? "Request to book" : step === 2 ? "Review booking" : "Continue"}
-                        <ArrowIcon className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
-                      </>
-                    )}
-                  </button>
+                <div className="flex items-center gap-3 rounded-full bg-sand-soft/85 p-2 shadow-[0_18px_40px_-22px_rgba(7,34,25,0.55)] ring-1 ring-jungle/10 backdrop-blur-md">
+                  {step > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => goTo(step - 1)}
+                      className="group inline-flex h-12 w-12 shrink-0 items-center justify-center gap-2 rounded-full text-sm font-semibold ring-1 ring-jungle/20 transition-colors hover:ring-jungle sm:w-auto sm:px-5"
+                    >
+                      <ArrowIcon direction="left" className="h-4 w-4 transition-transform duration-500 group-hover:-translate-x-1" />
+                      <span className="sr-only sm:not-sr-only">Back</span>
+                    </button>
+                  )}
+                  <p className="hidden pl-3 text-xs font-semibold tracking-[0.2em] text-jungle/45 uppercase md:block">
+                    Step {step + 1} of {STEPS.length}
+                  </p>
+
+                  <div className="ml-auto flex flex-1 items-center justify-end gap-4 sm:flex-none">
+                    <AnimatePresence>
+                      {hint && (
+                        <motion.p
+                          role="alert"
+                          initial={{ opacity: 0, x: 8 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0 }}
+                          className="hidden text-right text-sm text-red-700 sm:block"
+                        >
+                          {hint}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                    <button
+                      type="button"
+                      onClick={next}
+                      disabled={status === "sending"}
+                      className={cn(
+                        "group inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-full px-7 text-sm font-semibold whitespace-nowrap transition-colors duration-500 sm:flex-none",
+                        step === 3 ? "bg-lagoon text-sand-soft hover:bg-jungle" : "bg-jungle text-sand hover:bg-lagoon",
+                        status === "sending" && "cursor-wait opacity-80",
+                      )}
+                    >
+                      {status === "sending" ? (
+                        <>
+                          <Spinner /> Sending request…
+                        </>
+                      ) : (
+                        <>
+                          {step === 3 ? "Request to book" : step === 2 ? "Review booking" : "Continue"}
+                          <ArrowIcon className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" />
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -310,11 +323,68 @@ export function BookingFlow() {
               {stay && totalGuests > stay.listing.guests && (
                 <p className="mt-3 text-center text-sm text-red-700">This stay sleeps up to {stay.listing.guests}.</p>
               )}
+              {/* The review step has its own "Good to know"; until then this keeps the reassurances in view. */}
+              {step < 3 && (
+                <ul className="mt-4 space-y-4 rounded-[28px] p-6 ring-1 ring-jungle/10">
+                  {sidebarNotes.map((note) => (
+                    <li key={note.text} className="flex items-start gap-3 text-sm text-jungle/70">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-lagoon/12 text-lagoon">{note.icon}</span>
+                      <span className="pt-1.5">{note.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </aside>
           </div>
         )}
       </section>
     </>
+  );
+}
+
+const rated = stays.flatMap((s) => (s.listing.rating === null ? [] : [s.listing.rating]));
+const averageRating = rated.reduce((sum, r) => sum + r, 0) / rated.length;
+
+const heroNotes = [
+  { icon: <StarIcon />, text: `${averageRating.toFixed(1)} average guest rating` },
+  { icon: <PinIcon />, text: "Bocas Town, Isla Colón" },
+  { icon: <KeyIcon />, text: "Self check-in from 3:00 PM" },
+];
+
+const sidebarNotes = [
+  { icon: <ShieldIcon />, text: "Nothing is charged until your booking is confirmed." },
+  { icon: <BoatIcon />, text: "Tours and water taxis set up for you, leaving from our dock." },
+  { icon: <WifiIcon />, text: "Starlink Wi-Fi, paddle boards and a kayak come with every stay." },
+];
+
+/** The page title, with a few honest reasons to book; shared with the loading shell so nothing jumps. */
+export function BookingIntro({ done }: { done: boolean }) {
+  return (
+    <div className="mx-auto max-w-[1400px] text-center">
+      <p className="text-[11px] font-semibold tracking-[0.32em] text-sand/60 uppercase">Book direct · La Bocana</p>
+      <h1 className="font-display mt-5 text-[clamp(3rem,8vw,7rem)] leading-[0.9] tracking-[-0.03em]">
+        {done ? "See you on the " : "Book your "}
+        <span className="wonk text-lagoon-soft italic">{done ? "water." : "stay."}</span>
+      </h1>
+      {!done && (
+        <>
+          <p className="mx-auto mt-5 max-w-md text-sand/70">Four quick steps, and you&apos;re on your way to the water.</p>
+          <ul className="mx-auto mt-7 flex max-w-3xl flex-wrap items-center justify-center gap-2">
+            {heroNotes.map((note) => (
+              <li
+                key={note.text}
+                className="inline-flex items-center gap-2 rounded-full bg-sand/[0.06] py-1.5 pr-4 pl-2 text-xs font-medium text-sand/80 ring-1 ring-sand/10"
+              >
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-lagoon/20 text-lagoon-soft [&>svg]:h-3.5 [&>svg]:w-3.5">
+                  {note.icon}
+                </span>
+                {note.text}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
   );
 }
 

@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import Image from "next/image";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import {
   ARRIVAL_WINDOWS,
   destinations,
@@ -55,7 +55,7 @@ export function StepDates({
   const nights = start && end ? nightsBetween(start, end) : 0;
 
   return (
-    <div>
+    <div className="@container">
       <StepHeading eyebrow="Step 1 of 4" title="When are you coming?">
         Pick your dates and who&apos;s travelling. Check-in is from 3:00 PM, check-out by 10:00 AM.
       </StepHeading>
@@ -81,34 +81,66 @@ export function StepDates({
         </div>
       </fieldset>
 
-      <div className="mt-8 rounded-[28px] p-5 ring-1 ring-jungle/12 md:p-7">
-        <RangeCalendar start={start} end={end} onChange={onDates} months={1} className="mx-auto max-w-md" />
-      </div>
+      {/* Calendar beside the chosen dates and guests when the card is wide enough, stacked otherwise. */}
+      <div className="mt-8 grid items-start gap-4 @min-[44rem]:grid-cols-[minmax(0,1fr)_19rem]">
+        <div className="rounded-[28px] bg-sand-soft/60 p-5 ring-1 ring-jungle/12 md:p-6">
+          <RangeCalendar start={start} end={end} onChange={onDates} months={1} className="mx-auto max-w-md" />
+        </div>
 
-      <div className="mt-4 grid gap-px overflow-hidden rounded-[24px] bg-jungle/12 sm:grid-cols-3">
-        <DateTile label="Check-in" value={start ? formatLong(start) : "Add date"} note="From 3:00 PM" muted={!start} />
-        <DateTile label="Check-out" value={end ? formatLong(end) : "Add date"} note="By 10:00 AM" muted={!end} />
-        <DateTile label="Length of stay" value={nights ? `${nights} ${nights === 1 ? "night" : "nights"}` : "—"} note="Choose two dates" muted={!nights} />
-      </div>
+        <div className="grid gap-4">
+          <div className="grid gap-px overflow-hidden rounded-[24px] bg-jungle/12 ring-1 ring-jungle/12 @min-[28rem]:@max-[44rem]:grid-cols-3">
+            <DateTile label="Check-in" value={start ? formatLong(start) : "Add date"} note="From 3:00 PM" muted={!start} />
+            <DateTile label="Check-out" value={end ? formatLong(end) : "Add date"} note="By 10:00 AM" muted={!end} />
+            <DateTile
+              label="Length of stay"
+              value={nights ? `${nights} ${nights === 1 ? "night" : "nights"}` : "—"}
+              note={nights ? "Ready for the next step" : "Choose two dates"}
+              muted={!nights}
+              highlight={nights > 0}
+            />
+          </div>
 
-      <div className="mt-8 rounded-[28px] px-5 py-3 ring-1 ring-jungle/12 md:px-7">
-        <GuestCounters guests={guests} max={maxGuests} onChange={onGuests} />
+          <div className="rounded-[24px] bg-sand-soft/60 px-5 py-2 ring-1 ring-jungle/12">
+            <GuestCounters guests={guests} max={maxGuests} onChange={onGuests} />
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-function DateTile({ label, value, note, muted }: { label: string; value: string; note: string; muted: boolean }) {
+function DateTile({
+  label,
+  value,
+  note,
+  muted,
+  highlight = false,
+}: {
+  label: string;
+  value: string;
+  note: string;
+  muted: boolean;
+  highlight?: boolean;
+}) {
   return (
-    <div className="bg-sand-soft p-5">
-      <p className="text-[11px] font-semibold tracking-[0.2em] text-jungle/50 uppercase">{label}</p>
+    <div className={cn("p-5 transition-colors duration-500", highlight ? "bg-jungle text-sand" : "bg-sand-soft")}>
+      <p className={cn("text-[11px] font-semibold tracking-[0.2em] uppercase", highlight ? "text-lagoon-soft" : "text-jungle/50")}>{label}</p>
       <p className={cn("font-display mt-1 text-xl", muted && "text-jungle/35")}>{value}</p>
-      <p className="mt-0.5 text-xs text-jungle/50">{note}</p>
+      <p className={cn("mt-0.5 text-xs", highlight ? "text-sand/60" : "text-jungle/50")}>{note}</p>
     </div>
   );
 }
 
 /* ── 2 · Choose a stay ────────────────────────────────────────────────── */
+
+type KindFilter = { id: "all" | "bungalows" | "apartments" | "house"; label: string; match: (stay: Stay) => boolean };
+
+const KIND_FILTERS: KindFilter[] = [
+  { id: "all", label: "All stays", match: () => true },
+  { id: "bungalows", label: "Bungalows", match: (stay) => stay.kind === "Bungalow" || stay.kind === "Pair" },
+  { id: "apartments", label: "Apartments", match: (stay) => stay.kind === "Apartment" },
+  { id: "house", label: "House", match: (stay) => stay.kind === "House" },
+];
 
 export function StepStay({
   selected,
@@ -124,10 +156,12 @@ export function StepStay({
   destination: DestinationId;
 }) {
   const total = guests.adults + guests.children;
+  const [kind, setKind] = useState<KindFilter["id"]>("all");
+  const match = KIND_FILTERS.find((f) => f.id === kind)?.match ?? (() => true);
   // Every stay is in Bocas Town on Isla Colón, so all destinations match; those that fit come first.
-  const sorted = [...stays].sort(
-    (a, b) => Number(b.listing.guests >= total) - Number(a.listing.guests >= total) || a.listing.price - b.listing.price,
-  );
+  const sorted = stays
+    .filter(match)
+    .sort((a, b) => Number(b.listing.guests >= total) - Number(a.listing.guests >= total) || a.listing.price - b.listing.price);
   const place = destinations.find((d) => d.id === destination)?.label ?? "Bocas del Toro";
 
   return (
@@ -135,6 +169,35 @@ export function StepStay({
       <StepHeading eyebrow="Step 2 of 4" title="Choose your stay">
         {nights} {nights === 1 ? "night" : "nights"} · {guestsLabel(guests)} · {destination === "any" ? "Bocas Town, Isla Colón" : place}
       </StepHeading>
+
+      <div role="group" aria-label="Filter stays" className="no-scrollbar -mx-1 mb-6 flex gap-2 overflow-x-auto px-1 pb-1">
+        {KIND_FILTERS.map((filter) => {
+          const count = stays.filter(filter.match).length;
+          const active = kind === filter.id;
+          return (
+            <button
+              key={filter.id}
+              type="button"
+              aria-pressed={active}
+              onClick={() => setKind(filter.id)}
+              className={cn(
+                "inline-flex shrink-0 items-center gap-2 rounded-full py-2 pr-2 pl-4 text-sm font-semibold ring-1 transition-colors duration-300",
+                active ? "bg-jungle text-sand ring-jungle" : "ring-jungle/20 hover:ring-jungle/50",
+              )}
+            >
+              {filter.label}
+              <span
+                className={cn(
+                  "flex h-6 min-w-6 items-center justify-center rounded-full px-1.5 text-xs tabular-nums",
+                  active ? "bg-lagoon text-sand-soft" : "bg-jungle/8 text-jungle/60",
+                )}
+              >
+                {count}
+              </span>
+            </button>
+          );
+        })}
+      </div>
 
       <div role="radiogroup" aria-label="Stays" className="grid gap-4 sm:grid-cols-2">
         {sorted.map((stay, i) => (
