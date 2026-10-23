@@ -255,9 +255,9 @@ function FinalContent({ revealed }: { revealed: boolean }) {
         <span className="h-px w-8 bg-sand/60" />
       </motion.p>
 
-      <h1 className="font-display text-[clamp(3rem,min(7.5vw,12svh),7.5rem)] leading-[0.88] tracking-[-0.035em]">
+      <h1 className="font-display flex items-end justify-center gap-x-[0.25em] text-[clamp(2rem,min(9.4vw,12svh),7.5rem)] leading-[0.88] tracking-[-0.035em] whitespace-nowrap">
         <span className="sr-only">La Bocana Bungalows</span>
-        <span className="block overflow-hidden pb-[0.06em]">
+        <span className="block overflow-hidden pb-[0.16em]">
           <SplitChars text="La Bocana" show={revealed} delay={0.05} />
         </span>
         <span className="wonk block overflow-hidden pb-[0.16em] text-lagoon-soft italic">
