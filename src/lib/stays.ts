@@ -63,25 +63,25 @@ export type Stay = Omit<Curated, "coverPhoto"> & {
 };
 
 const park: Photo = {
-  src: "/images/checkin/park.jpg",
+  src: "/images/checkin/park.webp",
   alt: "The park with a large tree at the southern end of 5th Street in Bocas town",
   caption: "The park at the southern end of 5th Street",
 };
 
 const parkArrow: Photo = {
   ...park,
-  src: "/images/checkin/park-arrow.jpg",
+  src: "/images/checkin/park-arrow.webp",
   alt: "The park at the southern end of 5th Street, with an arrow showing the way",
 };
 
 const fromPark: Photo = {
-  src: "/images/checkin/from-park.jpg",
+  src: "/images/checkin/from-park.webp",
   alt: "View from the park across the street, with the property circled",
   caption: "Across the street from the park",
 };
 
 const entrance: Photo = {
-  src: "/images/checkin/entrance.jpg",
+  src: "/images/checkin/entrance.webp",
   alt: "Turquoise house beside the yellow building, with an arrow pointing to the entrance",
   caption: "The entrance, to the right of the yellow building",
 };

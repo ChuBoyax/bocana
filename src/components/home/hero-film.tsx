@@ -29,7 +29,7 @@ const REVEAL_AT = 0.86;
 /** The camera lands a little after the title appears, so the last frame keeps settling. */
 const SCENE_END = 0.95;
 const FALLBACK = {
-  src: "/images/hero-waterfront.jpg",
+  src: "/images/hero-waterfront.webp",
   alt: "La Bocana's turquoise bungalows and sundeck, seen from the water in Bocas Town",
 };
 
@@ -156,10 +156,10 @@ function FilmPoster() {
   const common = { alt: "", sizes: "100vw" };
   const {
     props: { srcSet: wide },
-  } = getImageProps({ ...common, src: "/images/film-poster-wide.jpg", width: 1920, height: 1080 });
+  } = getImageProps({ ...common, src: "/images/film-poster-wide.webp", width: 1920, height: 1080 });
   const {
     props: { srcSet: tall, ...rest },
-  } = getImageProps({ ...common, src: "/images/film-poster-tall.jpg", width: 720, height: 1280, loading: "eager", fetchPriority: "high" });
+  } = getImageProps({ ...common, src: "/images/film-poster-tall.webp", width: 720, height: 1280, loading: "eager", fetchPriority: "high" });
   return (
     <picture>
       <source media="(orientation: portrait)" srcSet={tall} />
@@ -204,18 +204,6 @@ function ChapterTitle({ chapter, index, progress }: { chapter: Chapter; index: n
           <p className="font-display mt-3 bg-linear-to-b from-sand-soft via-sand to-lagoon-soft bg-clip-text text-[clamp(3.6rem,min(12vw,20svh),11rem)] leading-[0.95] tracking-[-0.02em] text-transparent">
             {chapter.word}
           </p>
-          {index === 0 && (
-            <p className="mt-6 flex items-center gap-3 text-[10px] font-semibold tracking-[0.3em] text-sand/70 uppercase">
-              <span className="relative flex h-7 w-[18px] justify-center rounded-full border border-sand/50 pt-1.5">
-                <motion.span
-                  className="h-1.5 w-1 rounded-full bg-sand"
-                  animate={{ y: [0, 9, 0], opacity: [1, 0.2, 1] }}
-                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-                />
-              </span>
-              Scroll to play
-            </p>
-          )}
         </motion.div>
       </motion.div>
     </>

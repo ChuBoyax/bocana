@@ -19,17 +19,17 @@ const steps: Step[] = [
   {
     title: "Head to the south end of 5th Street",
     text: "La Bocana sits at the southern end of Calle 5ta, where the street meets the little park with the big tree.",
-    image: { src: "/images/checkin/park.jpg", alt: "The park at the southern end of 5th Street" },
+    image: { src: "/images/checkin/park.webp", alt: "The park at the southern end of 5th Street" },
   },
   {
     title: "Look across from the park",
     text: "Stand by the park and look across the street. You'll spot the turquoise house next to the yellow building.",
-    image: { src: "/images/checkin/from-park.jpg", alt: "View from the park, with the property circled across the street" },
+    image: { src: "/images/checkin/from-park.webp", alt: "View from the park, with the property circled across the street" },
   },
   {
     title: "Enter to the right of the yellow building",
     text: "The entrance is just to the right of the yellow building. Follow the arrow and you're home.",
-    image: { src: "/images/checkin/entrance.jpg", alt: "The entrance beside the yellow building, marked with an arrow" },
+    image: { src: "/images/checkin/entrance.webp", alt: "The entrance beside the yellow building, marked with an arrow" },
   },
   {
     title: "Use the code from your application",

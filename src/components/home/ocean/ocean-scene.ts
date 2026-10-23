@@ -185,7 +185,7 @@ export async function createOceanScene(container: HTMLElement, cancelled: () => 
   });
 
   // The real ripple map (from the three.js examples) swaps in once loaded.
-  new THREE.TextureLoader().load("/textures/waternormals.jpg", (texture) => {
+  new THREE.TextureLoader().load("/textures/waternormals.webp", (texture) => {
     if (disposed) return texture.dispose();
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
     disposables.push(texture);

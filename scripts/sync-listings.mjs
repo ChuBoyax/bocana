@@ -90,7 +90,7 @@ async function savePhoto(url, file) {
   const { data, info } = await sharp(input)
     .rotate()
     .resize({ width: MAX_EDGE, height: MAX_EDGE, fit: "inside", withoutEnlargement: true })
-    .jpeg({ quality: 80, mozjpeg: true })
+    .webp({ quality: 78, effort: 6, smartSubsample: true })
     .toBuffer({ resolveWithObject: true });
   await writeFile(file, data);
   return info;
@@ -107,7 +107,7 @@ async function syncListing(id) {
   const sorted = [...raw.listingImage].sort((a, b) => a.sortOrder - b.sortOrder);
   const images = [];
   for (const [i, image] of sorted.entries()) {
-    const name = `${String(i + 1).padStart(2, "0")}.jpg`;
+    const name = `${String(i + 1).padStart(2, "0")}.webp`;
     const meta = await savePhoto(image.url, path.join(dir, name));
     images.push({
       src: `/images/listings/${id}/${name}`,

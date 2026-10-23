@@ -29,7 +29,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: site.name,
     description: "Waterfront bungalows in Bocas del Toro, Panamá. Book direct.",
-    images: ["/images/hero-waterfront.jpg"],
+    // JPG rather than WebP: some link-preview crawlers still skip WebP.
+    images: [{ url: "/images/og.jpg", width: 1200, height: 630, alt: "La Bocana's bungalows seen from the water" }],
     type: "website",
   },
 };

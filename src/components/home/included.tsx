@@ -26,7 +26,7 @@ export function Included() {
           </Reveal>
           <Reveal delay={0.2} className="relative mt-10">
             <ParallaxImage
-              src="/images/listings/561068/37.jpg"
+              src="/images/listings/561068/37.webp"
               alt="The shared sundeck with umbrellas and loungers over the turquoise water"
               sizes="(min-width: 1024px) 40vw, 100vw"
               className="aspect-[4/5] rounded-[32px]"
