@@ -132,7 +132,7 @@ const curated: Curated[] = [
   {
     slug: "bungalow-1",
     hostawayId: 561059,
-    label: "Bungalow #1",
+    label: "Bungalow 1",
     name: "Waterfront Bungalow",
     kind: "Bungalow",
     unit: "Bungalow #1",
@@ -145,7 +145,7 @@ const curated: Curated[] = [
   {
     slug: "bungalow-2",
     hostawayId: 561063,
-    label: "Bungalow #2",
+    label: "Bungalow 2",
     name: "Ocean View Bungalow",
     kind: "Bungalow",
     unit: "Bungalow #2",
@@ -158,7 +158,7 @@ const curated: Curated[] = [
   {
     slug: "bungalow-3",
     hostawayId: 561065,
-    label: "Bungalow #3",
+    label: "Bungalow 3",
     name: "Over the Water Bungalow",
     kind: "Bungalow",
     unit: "Bungalow #3",
@@ -171,7 +171,7 @@ const curated: Curated[] = [
   {
     slug: "bungalow-4",
     hostawayId: 564039,
-    label: "Bungalow #4",
+    label: "Bungalow 4",
     name: "Luxury Bungalow on the Water",
     kind: "Bungalow",
     unit: "Bungalow #4",
@@ -184,7 +184,7 @@ const curated: Curated[] = [
   {
     slug: "bungalows-2-and-3",
     hostawayId: 561068,
-    label: "Bungalows #2 & #3",
+    label: "Bungalows 2 & 3",
     name: "Two Tropical Bungalows",
     kind: "Pair",
     unit: "Bungalows #2 & #3",
@@ -197,7 +197,7 @@ const curated: Curated[] = [
   {
     slug: "bungalows-1-and-4",
     hostawayId: 564420,
-    label: "Bungalows #1 & #4",
+    label: "Bungalows 1 & 4",
     name: "Double Waterfront Bungalows",
     kind: "Pair",
     unit: "Bungalows #1 & #4",

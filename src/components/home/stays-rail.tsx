@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useMotionValue, useMotionValueEvent, useScroll, useTransform, type MotionValue } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { motion, useMotionValue, useScroll, useTransform, type MotionValue } from "motion/react";
+import { useEffect, useRef } from "react";
 import { formatPrice, stays, stayFacts, type Stay } from "@/lib/stays";
 import { SiteLink } from "../navigation";
 import { StayMedia } from "../stay-art";
@@ -16,13 +16,8 @@ export function StaysRail() {
   const section = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const distance = useMotionValue(0);
-  const [current, setCurrent] = useState(1);
   const { scrollYProgress } = useScroll({ target: section, offset: ["start start", "end end"] });
   const x = useTransform(() => -scrollYProgress.get() * distance.get());
-
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    setCurrent(Math.min(stays.length, Math.floor(v * stays.length) + 1));
-  });
 
   useEffect(() => {
     const trackEl = track.current;
@@ -55,26 +50,15 @@ export function StaysRail() {
       className="relative rounded-t-[40px] bg-jungle text-sand md:h-[calc(100svh+var(--rail-distance,0px))] md:rounded-t-[64px]"
     >
       <div className="flex flex-col justify-center py-24 md:sticky md:top-0 md:h-svh md:overflow-hidden md:py-0">
-        <div className="mb-10 flex flex-col gap-8 px-5 md:mb-12 md:flex-row md:items-end md:justify-between md:px-10">
-          <div>
-            <SectionLabel index="02" className="text-sand/80">
-              Stays
-            </SectionLabel>
-            <RevealText
-              text="Nine hideaways, *one* address."
-              className="font-display mt-6 max-w-3xl text-[clamp(2.6rem,6vw,5.5rem)] leading-[0.95] tracking-tight"
-              accentClassName="wonk italic text-lagoon-soft"
-            />
-          </div>
-          <div className="hidden w-56 md:block">
-            <div className="font-display flex items-baseline justify-between text-sm">
-              <span className="text-3xl tabular-nums">{String(current).padStart(2, "0")}</span>
-              <span className="text-sand/50">/ {String(stays.length).padStart(2, "0")}</span>
-            </div>
-            <div className="mt-3 h-px bg-sand/20">
-              <motion.div style={{ scaleX: scrollYProgress }} className="h-full origin-left bg-lagoon-soft" />
-            </div>
-          </div>
+        <div className="mb-10 px-5 md:mb-12 md:px-10">
+          <SectionLabel index="02" className="text-sand/80">
+            Stays
+          </SectionLabel>
+          <RevealText
+            text="Nine hideaways, *one* address."
+            className="font-display mt-6 text-[clamp(2.1rem,4.4vw,4.25rem)] leading-[0.95] tracking-tight text-balance md:whitespace-nowrap"
+            accentClassName="wonk italic text-lagoon-soft"
+          />
         </div>
 
         <div className="no-scrollbar snap-x snap-mandatory scroll-px-5 overflow-x-auto md:overflow-visible">
