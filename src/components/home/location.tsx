@@ -16,7 +16,7 @@ export function Location() {
     <section id="location" className="bg-sand px-5 py-28 md:px-10 md:py-40">
       <div className="mx-auto grid max-w-[1400px] gap-14 md:grid-cols-12 md:gap-10">
         <div className="md:col-span-5">
-          <SectionLabel index="06">Location</SectionLabel>
+          <SectionLabel index="05">Location</SectionLabel>
           <RevealText
             text="Right in town, on the *quiet* end."
             className="font-display mt-6 text-[clamp(2.6rem,5vw,4.75rem)] leading-[0.95] tracking-tight"

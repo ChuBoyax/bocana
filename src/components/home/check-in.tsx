@@ -42,7 +42,7 @@ export function CheckIn() {
   const [active, setActive] = useState(0);
 
   return (
-    <section id="check-in" className="bg-sand px-5 py-28 md:px-10 md:py-40">
+    <section id="check-in" className="bg-sand px-5 pt-28 pb-10 md:px-10 md:pt-40">
       <div className="mx-auto max-w-[1400px]">
         <div className="grid gap-8 md:grid-cols-12">
           <div className="md:col-span-3 md:pt-4">

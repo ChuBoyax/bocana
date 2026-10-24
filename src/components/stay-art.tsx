@@ -85,7 +85,7 @@ const frond = (() => {
   return { leaves, stem: `M0 0Q${ctrl[0]} ${ctrl[1]} ${p1[0]} ${p1[1]}` };
 })();
 
-/** A tropical colour scene, used where there's no photo (experiences, 404). */
+/** A tropical colour scene, used where there's no photo (booking summary, 404). */
 export function StayArt({ tone, className }: { tone: Tone; className?: string }) {
   const scene = scenes[tone];
 

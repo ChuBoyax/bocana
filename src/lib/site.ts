@@ -1,5 +1,3 @@
-import type { Tone } from "./stays";
-
 // Pin from the Hostaway listings (the complex at the south end of 5th Street).
 const coords = { lat: 9.3358154, lng: -82.2422087 };
 
@@ -21,7 +19,6 @@ export const navLinks = [
   { label: "Stays", href: "/#stays" },
   { label: "Included", href: "/#included" },
   { label: "Arrival", href: "/#check-in" },
-  { label: "Experiences", href: "/#experiences" },
   { label: "Location", href: "/#location" },
 ];
 
@@ -41,51 +38,4 @@ export const perks: Perk[] = [
   { icon: "deck", title: "Sundeck on the water", text: "Loungers, umbrellas and tables with sunset views." },
   { icon: "key", title: "Easy self check-in", text: "Keypad locks for late arrivals, and staff on site most days." },
   { icon: "boat", title: "Tours & water taxis", text: "We'll set up your island days. Boats can leave from our dock." },
-];
-
-export type Experience = {
-  title: string;
-  place: string;
-  text: string;
-  tone: Tone;
-  /** Photo for the card. Without one, the card falls back to the colour scene for `tone`. */
-  image?: string;
-};
-
-export const experiences: Experience[] = [
-  {
-    title: "Starfish Beach",
-    place: "Playa Estrella · Boca del Drago",
-    text: "Calm, clear shallows where starfish rest on the sand. Look, don't touch, and bring a snorkel.",
-    tone: "dawn",
-    image: "/images/bocas-aerial.webp",
-  },
-  {
-    title: "Red Frog Beach",
-    place: "Isla Bastimentos",
-    text: "A short boat ride and a jungle path lead to golden sand, rolling waves and tiny red poison dart frogs.",
-    tone: "jungle",
-    image: "/images/bocas-aerial.webp",
-  },
-  {
-    title: "Dolphin Bay",
-    place: "Bahía de los Delfines",
-    text: "Glide across a calm bay where bottlenose dolphins are often spotted. A favourite half-day boat trip.",
-    tone: "lagoon",
-    image: "/images/bocas-aerial.webp",
-  },
-  {
-    title: "Zapatilla Cays",
-    place: "Bastimentos Marine Park",
-    text: "Two uninhabited islands ringed by white sand and coral reef. The postcard view of Bocas.",
-    tone: "dusk",
-    image: "/images/bocas-aerial.webp",
-  },
-  {
-    title: "Bluff Beach",
-    place: "Isla Colón",
-    text: "A wild, wave-pounded stretch on the island's east coast, loved by surfers and sunrise chasers.",
-    tone: "lagoon",
-    image: "/images/bocas-aerial.webp",
-  },
 ];

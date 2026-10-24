@@ -14,7 +14,7 @@ const legacyRedirects: Record<string, string> = {
   "/copy-of-sunset-breeze-bungalow-1": "/stays/bungalow-4",
   "/copy-of-sunset-breeze-bungalow": "/stays/bungalows-2-and-3",
   "/copy-of-luxury-bungalow-over-the-water": "/stays/bungalows-1-and-4",
-  "/experiences": "/#experiences",
+  "/experiences": "/",
 };
 
 const nextConfig: NextConfig = {

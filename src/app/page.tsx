@@ -1,5 +1,4 @@
 import { CheckIn } from "@/components/home/check-in";
-import { Experiences } from "@/components/home/experiences";
 import { HeroFilm } from "@/components/home/hero-film";
 import { Included } from "@/components/home/included";
 import { Location } from "@/components/home/location";
@@ -16,7 +15,6 @@ export default function Home() {
       <Marquee />
       <Included />
       <CheckIn />
-      <Experiences />
       <Location />
     </>
   );
