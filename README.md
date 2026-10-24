@@ -53,9 +53,9 @@ Three colours, taken from the place: **jungle** `#0d3b2e`, **lagoon** `#17a39b`,
 
 ## Motion
 
-- The homepage opens on sunset over the bay (`src/components/home/hero.tsx`): `public/images/hero-sunset-wide.webp`,
-  or `hero-sunset-tall.webp` on portrait screens (only the one that fits is downloaded). The picture settles in with
-  a slow zoom and drifts behind as the page scrolls; the title, tagline and search rise in on load.
+- The homepage opens on the sundeck and the bay on a bright day (`src/components/home/hero.tsx`, photo
+  `public/homepage/hmimage.webp`, imported so a blurred copy shows while it loads). The picture settles in with a
+  slow zoom and drifts behind as the page scrolls; the title, tagline and search rise in on load.
 - Use `SiteLink` (`src/components/navigation.tsx`) instead of `next/link` for internal links: anchors on the same page glide there with Lenis, anchors on another page are landed on properly. `useNavigate()` does the same from code.
 - Smooth scrolling with Lenis. Scroll-driven effects use Motion's `useScroll`/`useTransform`.
 - Everything respects `prefers-reduced-motion`.

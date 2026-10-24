@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "motion/react";
-import { getImageProps } from "next/image";
+import Image from "next/image";
 import { useRef } from "react";
 import { entranceDelay } from "@/lib/cn";
 import { site } from "@/lib/site";
@@ -9,10 +9,18 @@ import { SearchBar } from "../booking/booking-search";
 import { SiteLink } from "../navigation";
 import { ArrowIcon } from "../ui/bits";
 import { SplitChars } from "../ui/split-chars";
+import sundeck from "../../../public/homepage/hmimage.webp";
+
+/** The photo behind it: La Bocana's own sundeck on a bright day. */
+const backdrop = {
+  // Imported rather than referenced by path, so Next knows its size and makes a tiny blurred copy to show at once.
+  src: sundeck,
+  alt: "La Bocana's sundeck on the water: tables and umbrellas over the turquoise bay",
+};
 
 /**
- * The homepage's first screen: sunset over the bay behind the name, a line about the place, and the search.
- * As the page scrolls on, the picture drifts down behind and the words lift away.
+ * The homepage's first screen: the sundeck and the bay behind the name, a line about the place, and the
+ * search. As the page scrolls on, the picture drifts down behind and the words lift away.
  */
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -30,13 +38,13 @@ export function Hero() {
       className="relative h-[calc(100lvh+var(--hero-overlap))] min-h-[calc(640px+var(--hero-overlap))] overflow-hidden bg-jungle-deep text-sand"
     >
       <motion.div style={{ y: backdropY }} className="absolute inset-0">
-        <Backdrop />
+        {/* The page's largest image, so it's fetched first, its blurred copy showing until it's in; it settles in with a slow zoom. */}
+        <Image src={backdrop.src} alt={backdrop.alt} fill preload placeholder="blur" sizes="100vw" className="animate-settle object-cover" />
       </motion.div>
-      <div className="absolute inset-0 bg-jungle-deep/15" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(4,20,15,0.4)_100%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-jungle-deep/55 to-transparent" />
-      {/* A soft shade at the top so the nav reads over the bright sky. */}
-      <div className="absolute inset-x-0 top-0 h-32 bg-linear-to-b from-jungle-deep/45 to-transparent" />
+      {/* Light shades, to keep the day bright: a soft vignette, a little depth at the foot, and at the top for the nav. */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,rgba(4,20,15,0.3)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-jungle-deep/40 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-32 bg-linear-to-b from-jungle-deep/40 to-transparent" />
 
       {/* Centred in the first screen, as it is with the browser bars showing. */}
       <motion.div
@@ -84,26 +92,5 @@ export function Hero() {
         </div>
       </motion.div>
     </section>
-  );
-}
-
-/**
- * Sunset over the bay, wide or tall to suit the screen (only the one that fits is downloaded). It's the
- * page's largest image, so it's fetched first; it settles in with a slow zoom.
- */
-function Backdrop() {
-  const common = { alt: "", sizes: "100vw" };
-  const {
-    props: { srcSet: wide },
-  } = getImageProps({ ...common, src: "/images/hero-sunset-wide.webp", width: 1920, height: 1080 });
-  const {
-    props: { srcSet: tall, ...rest },
-  } = getImageProps({ ...common, src: "/images/hero-sunset-tall.webp", width: 720, height: 1280, loading: "eager", fetchPriority: "high" });
-  return (
-    <picture>
-      <source media="(orientation: portrait)" srcSet={tall} />
-      <source srcSet={wide} />
-      <img {...rest} alt="" className="absolute inset-0 h-full w-full animate-settle object-cover" />
-    </picture>
   );
 }
