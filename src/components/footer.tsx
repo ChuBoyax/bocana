@@ -8,7 +8,6 @@ import { stays } from "@/lib/stays";
 import { wavePath } from "@/lib/wave";
 import { SiteLink } from "./navigation";
 import { ArrowIcon } from "./ui/bits";
-import { Magnetic } from "./ui/magnetic";
 import { RevealText } from "./ui/reveal-text";
 
 const WORDMARK = "La Bocana";
@@ -47,15 +46,6 @@ export function Footer() {
                 className="font-display text-[8vw] leading-[0.9] tracking-tight whitespace-nowrap md:text-[clamp(2.5rem,6vw,6.5rem)]"
                 accentClassName="wonk italic text-lagoon-soft"
               />
-              <Magnetic strength={0.45}>
-                <SiteLink
-                  href="/#stays"
-                  className="group flex h-36 w-36 flex-col items-center justify-center gap-2 rounded-full bg-lagoon text-center text-sm font-semibold text-sand-soft transition-transform duration-700 ease-out-expo hover:scale-105 md:h-44 md:w-44"
-                >
-                  <ArrowIcon className="h-5 w-5 transition-transform duration-700 ease-out-expo group-hover:-rotate-45" />
-                  Find your stay
-                </SiteLink>
-              </Magnetic>
             </div>
 
             <div className="mt-20 grid gap-12 border-t border-sand/10 pt-12 sm:grid-cols-2 md:grid-cols-12">
