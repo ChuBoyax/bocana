@@ -122,11 +122,13 @@ const CREST = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 function BookButton({
   href,
   tone,
+  size = "md",
   onClick,
   className,
 }: {
   href: string;
   tone: "light" | "dark";
+  size?: "sm" | "md";
   onClick?: () => void;
   className?: string;
 }) {
@@ -135,7 +137,8 @@ function BookButton({
       href={href}
       onClick={onClick}
       className={cn(
-        "group relative isolate inline-flex items-center gap-3 overflow-hidden rounded-full py-1.5 pr-5 pl-1.5 text-sm font-semibold transition-colors duration-500 hover:text-sand-soft focus-visible:text-sand-soft",
+        "group relative isolate inline-flex items-center overflow-hidden rounded-full font-semibold transition-colors duration-500 hover:text-sand-soft focus-visible:text-sand-soft",
+        size === "sm" ? "gap-2.5 py-1 pr-4 pl-1 text-xs" : "gap-3 py-1.5 pr-5 pl-1.5 text-sm",
         tone === "light" ? "bg-sand text-jungle" : "bg-jungle text-sand",
         className,
       )}
@@ -148,11 +151,12 @@ function BookButton({
       </span>
       <span
         className={cn(
-          "flex h-9 w-9 items-center justify-center rounded-full transition-all duration-700 ease-out-expo group-hover:-rotate-45 group-hover:bg-sand-soft group-hover:text-jungle",
+          "flex items-center justify-center rounded-full transition-all duration-700 ease-out-expo group-hover:-rotate-45 group-hover:bg-sand-soft group-hover:text-jungle",
+          size === "sm" ? "h-7 w-7" : "h-9 w-9",
           tone === "light" ? "bg-jungle text-sand" : "bg-sand text-jungle",
         )}
       >
-        <ArrowIcon className="h-4 w-4" />
+        <ArrowIcon className={size === "sm" ? "h-3.5 w-3.5" : "h-4 w-4"} />
       </span>
       <RollingLabel>Book now</RollingLabel>
     </SiteLink>
@@ -193,8 +197,8 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
               exit={{ y: "100%" }}
               transition={{ duration: 0.8, delay: 0.25 + i * 0.06, ease: EASE_OUT_EXPO }}
             >
-              <SiteLink href={link.href} onClick={onClose} className="flex items-baseline justify-between py-4">
-                <span className="font-display text-5xl tracking-tight">{link.label}</span>
+              <SiteLink href={link.href} onClick={onClose} className="flex items-baseline justify-between py-3">
+                <span className="font-display text-3xl tracking-tight">{link.label}</span>
                 <span className="font-display text-sm text-lagoon italic">0{i + 1}</span>
               </SiteLink>
             </motion.div>
@@ -207,16 +211,16 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0 }}
         transition={{ delay: 0.6, duration: 0.8 }}
-        className="flex items-end justify-between gap-6 text-sm text-sand/70"
+        className="flex items-end justify-between gap-6 text-xs text-sand/70"
       >
         <div>
           <p>{site.street}</p>
           <p>{site.city}</p>
-          <a href={site.directionsUrl} target="_blank" rel="noreferrer" className="mt-3 inline-block text-lagoon-soft underline underline-offset-4">
+          <a href={site.directionsUrl} target="_blank" rel="noreferrer" className="mt-2 inline-block text-lagoon-soft underline underline-offset-4">
             Get directions
           </a>
         </div>
-        <BookButton href="/book" tone="light" onClick={onClose} className="shrink-0" />
+        <BookButton href="/book" tone="light" size="sm" onClick={onClose} className="shrink-0" />
       </motion.div>
     </motion.div>
   );

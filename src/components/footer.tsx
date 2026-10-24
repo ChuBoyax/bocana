@@ -44,7 +44,7 @@ export function Footer() {
             <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-end">
               <RevealText
                 text="Your bungalow is *waiting.*"
-                className="font-display max-w-4xl text-[clamp(3rem,8vw,7.5rem)] leading-[0.9] tracking-tight"
+                className="font-display text-[8vw] leading-[0.9] tracking-tight whitespace-nowrap md:text-[clamp(2.5rem,6vw,6.5rem)]"
                 accentClassName="wonk italic text-lagoon-soft"
               />
               <Magnetic strength={0.45}>
