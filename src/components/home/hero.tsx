@@ -41,21 +41,14 @@ export function Hero() {
         {/* The page's largest image, so it's fetched first, its blurred copy showing until it's in; it settles in with a slow zoom. */}
         <Image src={backdrop.src} alt={backdrop.alt} fill preload placeholder="blur" sizes="100vw" className="animate-settle object-cover" />
       </motion.div>
-      {/* Light shades, to keep the day bright: a soft vignette, a little depth at the foot, and at the top for the nav. */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,rgba(4,20,15,0.3)_100%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-jungle-deep/40 to-transparent" />
-      <div className="absolute inset-x-0 top-0 h-32 bg-linear-to-b from-jungle-deep/40 to-transparent" />
+      {/* One even wash of the brand's jungle green over the photo, so the words read anywhere on it. */}
+      <div className="absolute inset-0 bg-jungle/70" />
 
       {/* Centred in the first screen, as it is with the browser bars showing. */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="absolute inset-x-0 top-0 z-10 flex h-svh min-h-[640px] flex-col items-center justify-center px-4 pt-24 pb-6 text-center [text-shadow:0_1px_3px_rgba(4,20,15,0.55),0_3px_24px_rgba(4,20,15,0.5)]"
+        className="absolute inset-x-0 top-0 z-10 flex h-svh min-h-[640px] flex-col items-center justify-center px-4 pt-24 pb-6 text-center"
       >
-        {/* A soft shade behind the title, tagline and search, so they read over the bright horizon. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_52%_46%_at_50%_54%,rgba(4,20,15,0.55),rgba(4,20,15,0.22)_55%,transparent_80%)]"
-        />
 
         <p style={entranceDelay(0)} className="mb-5 flex animate-rise items-center gap-3 text-[11px] font-semibold tracking-[0.34em] uppercase md:mb-6 md:text-xs">
           <span className="h-px w-8 bg-sand/60" />
