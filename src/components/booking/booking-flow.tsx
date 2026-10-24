@@ -2,6 +2,7 @@
 
 import { useLenis } from "lenis/react";
 import { AnimatePresence, motion } from "motion/react";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -167,6 +168,7 @@ export function BookingFlow() {
   return (
     <>
       <section className="relative overflow-hidden rounded-b-[40px] bg-jungle-deep px-5 pt-32 pb-[19.5rem] text-sand md:rounded-b-[64px] md:px-10 md:pt-40">
+        <BookingBackdrop />
         <BookingIntro done={done} />
         {/* Where the steps sit until the page scrolls past them. */}
         <div ref={stickLine} aria-hidden className="absolute inset-x-0 bottom-[16rem] h-px" />
@@ -175,8 +177,8 @@ export function BookingFlow() {
       {/* The steps stay in view while the form scrolls: pinned under the nav, or to the very top while it's away. */}
       <div
         className={cn(
-          "sticky top-(--nav-offset) z-30 -mt-[16rem] bg-jungle-deep pt-9 pb-6 text-sand transition-[top,border-radius,box-shadow] duration-700 ease-out-expo",
-          stuck && "rounded-b-[28px] shadow-[0_24px_40px_-24px_rgba(4,20,15,0.75)]",
+          "sticky top-(--nav-offset) z-30 -mt-[16rem] bg-jungle-deep/85 pt-5 pb-9 text-sand backdrop-blur-md transition-[top,border-radius,box-shadow] duration-700 ease-out-expo",
+          stuck && "rounded-b-[28px] bg-jungle-deep/95 shadow-[0_24px_40px_-24px_rgba(4,20,15,0.75)]",
         )}
       >
         <Stepper steps={STEPS} current={step} progress={stepProgress} completed={reached} finished={done} onSelect={goTo} />
@@ -357,23 +359,33 @@ const sidebarNotes = [
   { icon: <WifiIcon />, text: "Starlink Wi-Fi, paddle boards and a kayak come with every stay." },
 ];
 
+/** The photo behind the page title, under a deep green wash so the words stay readable. */
+export function BookingBackdrop() {
+  return (
+    <>
+      <Image src="/images/hero-waterfront.webp" alt="" fill priority sizes="100vw" className="object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-b from-jungle-deep/35 via-jungle-deep/45 to-jungle-deep/90" />
+    </>
+  );
+}
+
 /** The page title, with a few honest reasons to book; shared with the loading shell so nothing jumps. */
 export function BookingIntro({ done }: { done: boolean }) {
   return (
-    <div className="mx-auto max-w-[1400px] text-center">
-      <p className="text-[11px] font-semibold tracking-[0.32em] text-sand/60 uppercase">Book direct · La Bocana</p>
-      <h1 className="font-display mt-5 text-[clamp(3rem,8vw,7rem)] leading-[0.9] tracking-[-0.03em]">
+    <div className="relative z-10 mx-auto max-w-[1400px] text-center">
+      <p className="text-[10px] font-semibold tracking-[0.32em] text-sand/70 uppercase">Book direct · La Bocana</p>
+      <h1 className="font-display mt-4 text-[clamp(2.25rem,5vw,4.25rem)] leading-[0.95] tracking-[-0.03em]">
         {done ? "See you on the " : "Book your "}
         <span className="wonk text-lagoon-soft italic">{done ? "water." : "stay."}</span>
       </h1>
       {!done && (
         <>
-          <p className="mx-auto mt-5 max-w-md text-sand/70">Four quick steps, and you&apos;re on your way to the water.</p>
-          <ul className="mx-auto mt-7 flex max-w-3xl flex-wrap items-center justify-center gap-2">
+          <p className="mx-auto mt-4 max-w-md text-sm text-sand/80">Four quick steps, and you&apos;re on your way to the water.</p>
+          <ul className="mx-auto mt-6 flex max-w-3xl flex-wrap items-center justify-center gap-2">
             {heroNotes.map((note) => (
               <li
                 key={note.text}
-                className="inline-flex items-center gap-2 rounded-full bg-sand/[0.06] py-1.5 pr-4 pl-2 text-xs font-medium text-sand/80 ring-1 ring-sand/10"
+                className="inline-flex items-center gap-2 rounded-full bg-sand/[0.06] py-1.5 pr-4 pl-2 text-[11px] font-medium text-sand/90 ring-1 ring-sand/15 backdrop-blur-sm"
               >
                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-lagoon/20 text-lagoon-soft [&>svg]:h-3.5 [&>svg]:w-3.5">
                   {note.icon}

@@ -149,3 +149,5 @@ function Letter({ char, progress, index }: { char: string; progress: MotionValue
     </motion.span>
   );
 }
+
+
