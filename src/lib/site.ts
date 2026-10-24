@@ -30,12 +30,12 @@ export type Perk = {
 
 /** What every stay includes, from the Hostaway listing descriptions. */
 export const perks: Perk[] = [
-  { icon: "wifi", title: "Starlink Wi-Fi", text: "Fast Starlink internet, so working or streaming from paradise is easy." },
-  { icon: "water", title: "Unlimited drinking water", text: "Fresh drinking water on tap for your whole stay." },
-  { icon: "paddle", title: "Paddle boards & kayak", text: "Stand-up paddle boards and a kayak, ready at the dock." },
-  { icon: "laundry", title: "Wash & fold laundry", text: "One free load a week, 9am to 3pm, Monday to Friday." },
-  { icon: "swim", title: "Swim off the dock", text: "A ladder into the sea and a shower to rinse off after." },
-  { icon: "deck", title: "Sundeck on the water", text: "Loungers, umbrellas and tables with sunset views." },
-  { icon: "key", title: "Easy self check-in", text: "Keypad locks for late arrivals, and staff on site most days." },
-  { icon: "boat", title: "Tours & water taxis", text: "We'll set up your island days. Boats can leave from our dock." },
+  { icon: "wifi", title: "Starlink Wi-Fi", text: "Fast internet for working or streaming." },
+  { icon: "water", title: "Unlimited drinking water", text: "Fresh water on tap all stay." },
+  { icon: "paddle", title: "Paddle boards & kayak", text: "Ready at the dock." },
+  { icon: "laundry", title: "Wash & fold laundry", text: "One free load a week, Mon–Fri, 9am–3pm." },
+  { icon: "swim", title: "Swim off the dock", text: "A sea ladder and a rinse-off shower." },
+  { icon: "deck", title: "Sundeck on the water", text: "Loungers, umbrellas and sunset views." },
+  { icon: "key", title: "Easy self check-in", text: "Keypad locks, with staff on site most days." },
+  { icon: "boat", title: "Tours & water taxis", text: "We'll plan your island days." },
 ];

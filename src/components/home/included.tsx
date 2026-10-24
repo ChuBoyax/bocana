@@ -25,7 +25,7 @@ export function Included() {
         <div className="lg:col-span-5">
           <Reveal delay={0.15}>
             <p className="max-w-md text-lg text-jungle/70">
-              Every bungalow, apartment and the home share the same waterfront complex, and the same easy island extras.
+              Every stay shares the same waterfront complex and island extras.
             </p>
           </Reveal>
           <Reveal delay={0.2} className="relative mt-10">

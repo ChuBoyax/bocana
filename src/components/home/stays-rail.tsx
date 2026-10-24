@@ -129,7 +129,7 @@ function EndCard() {
         <p className="font-display text-[clamp(2rem,3vw,3rem)] leading-[1] tracking-tight">
           Know your dates? Let&apos;s find your <span className="wonk text-lagoon italic">spot.</span>
         </p>
-        <p className="mt-4 text-sm text-jungle/65">Pick dates and guests, and we&apos;ll show every stay that fits.</p>
+        <p className="mt-4 text-sm text-jungle/65">Pick dates and guests to see what fits.</p>
         <SiteLink
           href="/book"
           className="group mt-8 inline-flex items-center gap-3 rounded-full bg-jungle px-5 py-3 text-sm font-semibold text-sand transition-colors duration-500 hover:bg-lagoon"

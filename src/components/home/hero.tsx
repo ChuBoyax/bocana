@@ -67,7 +67,7 @@ export function Hero() {
         </h1>
 
         <p style={entranceDelay(0.55)} className="mt-3 max-w-xl animate-rise text-base font-medium text-balance md:mt-4 md:text-lg lg:max-w-none lg:whitespace-nowrap">
-          {site.tagline} Waterfront bungalows, apartments and a home in a quiet corner of Bocas Town.
+          {site.tagline} Waterfront stays in a quiet corner of Bocas Town.
         </p>
 
         <div style={entranceDelay(0.7)} className="mt-10 hidden animate-rise lg:block [@media(max-height:760px)]:mt-6">
