@@ -114,6 +114,11 @@
   html {
     -webkit-text-size-adjust: 100%;
     background: var(--color-jungle-deep);
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
   }
 
   body {
