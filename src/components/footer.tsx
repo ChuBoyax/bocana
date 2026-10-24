@@ -129,25 +129,37 @@ export function Footer() {
   );
 }
 
-/** Giant wordmark; each letter rises on its own beat as the footer settles. */
+/**
+ * Giant wordmark with the sunset video showing through the letters: the video plays underneath, and a
+ * jungle-green sheet with the letters cut out of it sits on top.
+ */
 function Wordmark({ progress }: { progress: MotionValue<number> }) {
+  const y = useTransform(progress, [0.3, 0.9], ["45%", "0%"]);
+  const opacity = useTransform(progress, [0.3, 0.7], [0, 1]);
+
   return (
-    <p aria-hidden className="font-display wonk mt-16 flex justify-center overflow-hidden text-[19.5vw] leading-[0.8] tracking-[-0.05em] italic select-none">
-      {Array.from(WORDMARK).map((char, i) => (
-        <Letter key={i} char={char} progress={progress} index={i} />
-      ))}
-    </p>
+    <motion.div aria-hidden style={{ y, opacity }} className="relative mx-auto mt-16 aspect-[1000/250] w-full max-w-[1500px] select-none">
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        src="/video/luma-e922d390.mp4"
+        poster="/video/luma-poster.webp"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+      />
+      <svg viewBox="0 0 1000 250" className="absolute inset-0 h-full w-full">
+        <defs>
+          <mask id="wordmark-cutout">
+            <rect width="1000" height="250" fill="#fff" />
+            <text x="500" y="205" textAnchor="middle" textLength="970" lengthAdjust="spacingAndGlyphs" fontSize="250" fill="#000" className="font-display wonk italic">
+              {WORDMARK}
+            </text>
+          </mask>
+        </defs>
+        <rect x="-2" y="-2" width="1004" height="254" mask="url(#wordmark-cutout)" className="fill-jungle-deep" />
+      </svg>
+    </motion.div>
   );
 }
-
-function Letter({ char, progress, index }: { char: string; progress: MotionValue<number>; index: number }) {
-  const start = 0.35 + index * 0.04;
-  const y = useTransform(progress, [start, Math.min(start + 0.35, 1)], ["100%", "0%"]);
-  return (
-    <motion.span style={{ y }} className="inline-block pb-[0.12em] text-sand/95">
-      {char === " " ? " " : char}
-    </motion.span>
-  );
-}
-
-

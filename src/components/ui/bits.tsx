@@ -78,22 +78,26 @@ export function ArrowIcon({ className, direction = "right" }: { className?: stri
   );
 }
 
+/** A sun rising behind a bungalow on stilts, with the water lapping below. */
 export function Logo({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" fill="none" className={className} aria-hidden>
-      <path d="M8.5 18.5a7.5 7.5 0 0 1 15 0Z" className="fill-lagoon" />
+      <circle cx="16" cy="11" r="7.5" className="fill-lagoon" />
+      <path d="M4.5 18.5 16 9.5l11.5 9Z" fill="currentColor" />
+      <rect x="8" y="18.5" width="16" height="3.2" rx="0.8" fill="currentColor" />
+      <path d="M11 21.7v4M16 21.7v4M21 21.7v4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
       <path
-        d="M2.5 21.5c2.2 0 3.3-1.6 5.4-1.6s3.2 1.6 5.4 1.6 3.3-1.6 5.4-1.6 3.2 1.6 5.4 1.6 3.3-1.6 5.4-1.6"
+        d="M2.5 26c2 0 3-1.4 4.9-1.4s2.9 1.4 4.9 1.4 3-1.4 4.9-1.4 2.9 1.4 4.9 1.4 3-1.4 4.9-1.4 2.9 1.4 3.4 1.4"
         stroke="currentColor"
-        strokeWidth="1.8"
+        strokeWidth="1.6"
         strokeLinecap="round"
       />
       <path
-        d="M5 26c1.9 0 2.9-1.3 4.7-1.3s2.8 1.3 4.7 1.3 2.9-1.3 4.7-1.3 2.8 1.3 4.7 1.3"
+        d="M5 29.6c1.7 0 2.6-1.1 4.2-1.1s2.5 1.1 4.2 1.1 2.6-1.1 4.2-1.1 2.5 1.1 4.2 1.1 2.6-1.1 4.2-1.1"
         stroke="currentColor"
-        strokeWidth="1.8"
+        strokeWidth="1.4"
         strokeLinecap="round"
-        opacity="0.55"
+        opacity="0.5"
       />
     </svg>
   );
