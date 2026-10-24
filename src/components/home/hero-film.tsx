@@ -59,7 +59,8 @@ function Film() {
 
   return (
     <section ref={ref} id="top" aria-label="La Bocana, a day on the water" className="relative h-[620svh] bg-jungle-deep md:h-[760svh]">
-      <div className="sticky top-0 h-svh overflow-hidden">
+      {/* Tall as the screen with the browser bars hidden, so no strip of page shows beneath the scene on phones. */}
+      <div className="sticky top-0 h-lvh overflow-hidden">
         <OceanCanvas progress={p} />
 
         <motion.div style={{ opacity: shade }} className="pointer-events-none absolute inset-0 bg-jungle-deep" />
@@ -68,11 +69,14 @@ function Film() {
         {/* A soft shade at the top so the nav reads over bright sky; nothing left behind when the nav hides. */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-linear-to-b from-jungle-deep/45 to-transparent" />
 
-        {chapters.map((chapter, i) => (
-          <ChapterTitle key={chapter.word} chapter={chapter} index={i} progress={p} />
-        ))}
+        {/* The words stay within the screen that's visible even with the browser bars showing. */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-svh">
+          {chapters.map((chapter, i) => (
+            <ChapterTitle key={chapter.word} chapter={chapter} index={i} progress={p} />
+          ))}
 
-        <FinalContent revealed={revealed} />
+          <FinalContent revealed={revealed} />
+        </div>
       </div>
     </section>
   );
