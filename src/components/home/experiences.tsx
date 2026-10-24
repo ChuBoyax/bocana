@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
+import Image from "next/image";
 import { useRef } from "react";
 import { cn } from "@/lib/cn";
 import { experiences, type Experience } from "@/lib/site";
@@ -106,7 +107,11 @@ function ExperienceCard({
 
         <div className="relative order-first overflow-hidden md:order-none">
           <motion.div style={{ scale: artScale }} className="absolute inset-0">
-            <StayArt tone={experience.tone} />
+            {experience.image ? (
+              <Image src={experience.image} alt="" fill sizes="(min-width: 768px) 55vw, 100vw" className="object-cover" />
+            ) : (
+              <StayArt tone={experience.tone} />
+            )}
           </motion.div>
         </div>
 

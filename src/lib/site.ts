@@ -48,6 +48,8 @@ export type Experience = {
   place: string;
   text: string;
   tone: Tone;
+  /** Photo for the card. Without one, the card falls back to the colour scene for `tone`. */
+  image?: string;
 };
 
 export const experiences: Experience[] = [
@@ -56,29 +58,34 @@ export const experiences: Experience[] = [
     place: "Playa Estrella · Boca del Drago",
     text: "Calm, clear shallows where starfish rest on the sand. Look, don't touch, and bring a snorkel.",
     tone: "dawn",
+    image: "/images/bocas-aerial.webp",
   },
   {
     title: "Red Frog Beach",
     place: "Isla Bastimentos",
     text: "A short boat ride and a jungle path lead to golden sand, rolling waves and tiny red poison dart frogs.",
     tone: "jungle",
+    image: "/images/bocas-aerial.webp",
   },
   {
     title: "Dolphin Bay",
     place: "Bahía de los Delfines",
     text: "Glide across a calm bay where bottlenose dolphins are often spotted. A favourite half-day boat trip.",
     tone: "lagoon",
+    image: "/images/bocas-aerial.webp",
   },
   {
     title: "Zapatilla Cays",
     place: "Bastimentos Marine Park",
     text: "Two uninhabited islands ringed by white sand and coral reef. The postcard view of Bocas.",
     tone: "dusk",
+    image: "/images/bocas-aerial.webp",
   },
   {
     title: "Bluff Beach",
     place: "Isla Colón",
     text: "A wild, wave-pounded stretch on the island's east coast, loved by surfers and sunrise chasers.",
     tone: "lagoon",
+    image: "/images/bocas-aerial.webp",
   },
 ];
