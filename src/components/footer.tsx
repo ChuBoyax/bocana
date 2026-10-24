@@ -140,7 +140,7 @@ function Wordmark({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div aria-hidden style={{ y, opacity }} className="relative mx-auto mt-16 aspect-[1000/250] w-full max-w-[1500px] select-none">
       <video
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-[2px] h-[calc(100%-4px)] w-[calc(100%-4px)] object-cover"
         src="/video/luma-e922d390.mp4"
         poster="/video/luma-poster.webp"
         autoPlay
@@ -149,7 +149,7 @@ function Wordmark({ progress }: { progress: MotionValue<number> }) {
         playsInline
         preload="metadata"
       />
-      <svg viewBox="0 0 1000 250" className="absolute inset-0 h-full w-full">
+      <svg viewBox="0 0 1000 250" className="absolute inset-0 h-full w-full overflow-visible">
         <defs>
           <mask id="wordmark-cutout">
             <rect width="1000" height="250" fill="#fff" />
