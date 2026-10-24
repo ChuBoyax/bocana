@@ -53,45 +53,13 @@ Three colours, taken from the place: **jungle** `#0d3b2e`, **lagoon** `#17a39b`,
 
 ## Motion
 
-- The homepage opens with a scroll-driven 3D film rendered live with three.js: dawn over the water, past sailboats
-  and jungle islands, then a turn in the golden afternoon light to reveal the bungalows, with surfers riding the reef
-  break in front of them. No video or model files: everything is generated in code (see below). The only texture
-  file is the ripple normal map `public/textures/waternormals.jpg`, from the three.js examples (MIT).
-  The overlay (chapter words, then title and search) is
-  `src/components/home/hero-film.tsx`. three.js loads only in the browser; without WebGL, or with reduced motion,
-  the waterfront photo is shown instead.
+- The homepage opens on sunset over the bay (`src/components/home/hero.tsx`): `public/images/hero-sunset-wide.webp`,
+  or `hero-sunset-tall.webp` on portrait screens (only the one that fits is downloaded). The picture settles in with
+  a slow zoom and drifts behind as the page scrolls; the title, tagline and search rise in on load.
 - Use `SiteLink` (`src/components/navigation.tsx`) instead of `next/link` for internal links: anchors on the same page glide there with Lenis, anchors on another page are landed on properly. `useNavigate()` does the same from code.
 - Smooth scrolling with Lenis. Scroll-driven effects use Motion's `useScroll`/`useTransform`.
 - Everything respects `prefers-reduced-motion`.
 
-### The 3D film (`src/components/home/ocean/`)
+## Images
 
-| To change… | Edit |
-| --- | --- |
-| Time of day, camera shots, mountain ranges, where boats, taxis, the surf and the cay are | `config.ts` (data only) |
-| Speed vs. looks per device (pixel ratio, shadows, reflection size, terrain detail, how many people) | `quality.ts` |
-| The bungalows' layout, guests on the deck | `waterfront.ts` |
-| How a bungalow is built (floors, verandas, roofs, windows) | `architecture.ts` (`bungalow()`) |
-| Paint, roofs, trim, foliage and the wind in the trees | `materials.ts` |
-| Palms and rainforest / the island's shape | `vegetation.ts` / `island.ts` |
-| Mountains on the horizon | `landscape.ts` |
-| The wave and the surfers / people who move about / figures and poses | `surf.ts` / `islanders.ts` / `people.ts` |
-| Sailboats and water taxis | `boats.ts` |
-
-`ocean-scene.ts` puts it together and runs the frame loop; `timeline.ts` turns film progress into light and a
-camera position; `textures.ts` paints the textures on canvases; `utils.ts` has noise, `bake()` and helpers.
-
-Keeping it light:
-
-- The scene is built a step at a time (`breathe()` between steps) and its shaders are compiled before the first
-  frame, so the page keeps scrolling smoothly while it loads.
-- Static things are baked into one mesh per material (`bake()`): every bungalow, the deck, and each boat.
-- The breaking wave is shaped and coloured in its vertex shader; nothing is recomputed on the CPU per frame.
-- People, spray and the surf are left out of the water's reflection pass (`NO_REFLECTION` layer) and out of the
-  shadow map, and are only animated and drawn once the camera is within `LIFE_DISTANCE` of them.
-- `AdaptiveResolution` lowers the pixel ratio when frames drop below about 45 fps, and raises it again when
-  there's headroom. Shadows are re-rendered only when the sun moves; the film stops rendering when it's off screen.
-- Photos are served as AVIF (WebP as fallback) by `next/image`; see `images` in `next.config.ts`.
-- Until the scene is ready, a poster of its first frame is shown (`public/images/film-poster-wide.jpg` and
-  `film-poster-tall.jpg` for portrait screens), and the live scene fades in over it. If the opening shot or light
-  changes, capture new posters from the running film with the page's overlays hidden.
+Photos are served as AVIF (WebP as fallback) by `next/image`; see `images` in `next.config.ts`.

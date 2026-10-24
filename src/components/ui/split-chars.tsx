@@ -1,37 +1,22 @@
-"use client";
-
-import { motion } from "motion/react";
-import { EASE_OUT_EXPO } from "@/lib/cn";
-
 type SplitCharsProps = {
   text: string;
-  show: boolean;
   delay?: number;
   stagger?: number;
 };
 
-/** Letters rise into place one by one. Wrap in an overflow-hidden line for the mask. */
-export function SplitChars({ text, show, delay = 0, stagger = 0.045 }: SplitCharsProps) {
+/**
+ * Letters rise into place one by one, `stagger` seconds apart after `delay`. Wrap in an overflow-hidden line
+ * for the mask. Plain CSS (`animate-letter`), so it plays from the first paint.
+ */
+export function SplitChars({ text, delay = 0, stagger = 0.045 }: SplitCharsProps) {
   return (
-    <motion.span
-      aria-hidden
-      className="inline-block"
-      initial="hidden"
-      animate={show ? "show" : "hidden"}
-      variants={{ hidden: {}, show: { transition: { staggerChildren: stagger, delayChildren: delay } } }}
-    >
+    <span aria-hidden className="inline-block">
       {Array.from(text).map((char, i) => (
-        <motion.span
-          key={i}
-          className="inline-block will-change-transform"
-          variants={{
-            hidden: { y: "118%", rotate: 9 },
-            show: { y: "0%", rotate: 0, transition: { duration: 1.3, ease: EASE_OUT_EXPO } },
-          }}
-        >
+        <span key={i} className="inline-block animate-letter" style={{ animationDelay: `${delay + i * stagger}s` }}>
+          {/* A plain space would collapse to nothing inside an inline-block. */}
           {char === " " ? " " : char}
-        </motion.span>
+        </span>
       ))}
-    </motion.span>
+    </span>
   );
 }

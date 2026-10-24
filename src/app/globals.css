@@ -26,26 +26,43 @@
   --animate-drift: drift 16s linear infinite;
   --animate-drift-slow: drift 28s linear infinite;
   --animate-drift-reverse: drift 22s linear infinite reverse;
-  --animate-turn: turn 24s linear infinite;
   --animate-bob: bob 7s ease-in-out infinite;
-  --animate-pulse-dot: pulse-dot 2.4s var(--ease-in-out-quart) infinite;
   /* The booking stepper's sailboat: riding the swell, sails breathing, flag streaming, water lapping. */
   --animate-sway: sway 4.6s ease-in-out infinite;
   --animate-billow: billow 3.4s ease-in-out infinite;
   --animate-flutter: flutter 0.7s ease-in-out infinite alternate;
   --animate-lap: lap 2.4s linear infinite;
+  /*
+   * Entrances on load: a picture settling in, words rising into place, letters rising one by one (see
+   * `SplitChars`). CSS rather than script, so they start with the first paint instead of waiting for the page's
+   * JavaScript. Stagger them with an inline `animation-delay`.
+   */
+  --animate-settle: settle 2.4s var(--ease-out-expo) both;
+  --animate-rise: rise 1.1s var(--ease-out-expo) both;
+  --animate-letter: letter 1.3s var(--ease-out-expo) both;
 
+  @keyframes settle {
+    from {
+      transform: scale(1.06);
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+  @keyframes letter {
+    from {
+      transform: translateY(118%) rotate(9deg);
+    }
+  }
   @keyframes drift {
     from {
       transform: translateX(0);
     }
     to {
       transform: translateX(-50%);
-    }
-  }
-  @keyframes turn {
-    to {
-      transform: rotate(360deg);
     }
   }
   @keyframes bob {
@@ -89,17 +106,6 @@
     }
     to {
       transform: translateX(-16px);
-    }
-  }
-  @keyframes pulse-dot {
-    0%,
-    100% {
-      opacity: 0.25;
-      transform: scale(0.8);
-    }
-    40% {
-      opacity: 1;
-      transform: scale(1);
     }
   }
 }
@@ -178,33 +184,45 @@ html[data-nav-hidden] {
   --nav-offset: 0rem;
 }
 
-/* Film grain over everything, very subtle. */
+/*
+ * How far the section after the homepage's hero rides up over it, its rounded corners framing the picture.
+ * The hero runs on below the screen by the same amount, so none of that section shows on load.
+ */
+:root {
+  --hero-overlap: 8svh;
+}
+
+/*
+ * Film grain over everything, very subtle. Only a little bigger than the screen, just enough to cover it as it
+ * jitters: it's a layer of its own, and every pixel of it is kept in GPU memory.
+ */
 .grain {
   pointer-events: none;
   position: fixed;
-  inset: -50%;
+  inset: -15%;
   z-index: 70;
   opacity: 0.06;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grain 6s steps(6) infinite;
 }
 
+/* Steps of up to 9% of 130% of the screen, inside the 15% margin either side. */
 @keyframes grain {
   0%,
   100% {
     transform: translate(0, 0);
   }
   20% {
-    transform: translate(-4%, 6%);
+    transform: translate(-6%, 9%);
   }
   40% {
-    transform: translate(5%, -3%);
+    transform: translate(8%, -5%);
   }
   60% {
-    transform: translate(-6%, -5%);
+    transform: translate(-9%, -8%);
   }
   80% {
-    transform: translate(3%, 5%);
+    transform: translate(5%, 8%);
   }
 }
 

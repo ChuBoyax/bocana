@@ -5,7 +5,7 @@ import { destinations, MAX_GUESTS, type DestinationId, type Guests } from "@/lib
 import { cn } from "@/lib/cn";
 
 /** − 2 + */
-export function Counter({
+function Counter({
   label,
   hint,
   value,

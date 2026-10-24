@@ -36,7 +36,7 @@ export function Welcome() {
   return (
     <section
       id="welcome"
-      className="relative z-10 -mt-[8svh] rounded-t-[40px] bg-sand px-5 pt-20 pb-28 md:rounded-t-[64px] md:px-10 md:pt-28 md:pb-40"
+      className="relative z-10 -mt-(--hero-overlap) rounded-t-[40px] bg-sand px-5 pt-20 pb-28 md:rounded-t-[64px] md:px-10 md:pt-28 md:pb-40"
     >
       <div className="mx-auto grid max-w-[1400px] gap-10 md:grid-cols-12">
         <div className="md:col-span-3 md:pt-4">

@@ -10,7 +10,7 @@ const WEEKDAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 const noop = () => () => {};
 
 /** Today's date, read on the client only so prerendered HTML stays static. */
-export function useToday() {
+function useToday() {
   return useSyncExternalStore(noop, () => isoDate(new Date()), () => "");
 }
 

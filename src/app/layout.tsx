@@ -6,16 +6,18 @@ import { Providers } from "@/components/providers";
 import { site } from "@/lib/site";
 import "./globals.css";
 
+// Latin only: it covers everything on the site, Spanish included, and each extra subset is another preloaded
+// font file competing with the hero poster while the page loads. (Add "latin-ext" back if text ever needs ł or ő.)
 const fraunces = Fraunces({
   variable: "--font-fraunces",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   style: ["normal", "italic"],
   axes: ["SOFT", "WONK", "opsz"],
 });
 
 const manrope = Manrope({
   variable: "--font-manrope",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {

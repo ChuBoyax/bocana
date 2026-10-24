@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, type ReactNode } from "react";
-import { EASE_OUT_EXPO } from "@/lib/cn";
+import { EASE_OUT_EXPO, entranceDelay } from "@/lib/cn";
 import { formatPrice, type Stay } from "@/lib/stays";
 import { SiteLink } from "../navigation";
 import { StayMedia } from "../stay-art";
@@ -18,12 +18,6 @@ export function StayHero({ stay }: { stay: Stay }) {
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "-45%"]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
   const { listing } = stay;
-
-  const fadeUp = (delay: number) => ({
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 1.1, delay, ease: EASE_OUT_EXPO },
-  });
 
   const details: { label: string; value: ReactNode }[] = [
     { label: "Guests", value: listing.guests },
@@ -61,7 +55,7 @@ export function StayHero({ stay }: { stay: Stay }) {
         style={{ y: textY, opacity: textOpacity }}
         className="relative z-10 mx-auto flex h-full max-w-[1400px] flex-col px-5 pt-28 pb-10 md:px-10 md:pt-32 md:pb-14"
       >
-        <motion.div {...fadeUp(0.1)}>
+        <div style={entranceDelay(0.1)} className="animate-rise">
           <SiteLink
             href="/#stays"
             className="group inline-flex items-center gap-2 rounded-full border border-sand/20 bg-jungle-deep/30 px-4 py-2 text-[11px] font-semibold tracking-[0.2em] uppercase backdrop-blur-md transition-colors hover:border-sand hover:bg-sand hover:text-jungle"
@@ -69,33 +63,33 @@ export function StayHero({ stay }: { stay: Stay }) {
             <ArrowIcon direction="left" className="h-3.5 w-3.5 transition-transform duration-500 group-hover:-translate-x-1" />
             All stays
           </SiteLink>
-        </motion.div>
+        </div>
 
         <div className="mt-auto max-w-4xl">
-          <motion.p
-            {...fadeUp(0.2)}
-            className="flex items-center gap-3 text-[11px] font-semibold tracking-[0.32em] text-sand/80 uppercase"
+          <p
+            style={entranceDelay(0.2)}
+            className="flex animate-rise items-center gap-3 text-[11px] font-semibold tracking-[0.32em] text-sand/80 uppercase"
           >
             <span className="h-px w-8 bg-lagoon-soft" />
             {stay.kind === "Pair" ? "Two bungalows" : stay.kind} · Bocas Town
-          </motion.p>
+          </p>
 
           <h1 className="font-display mt-5 text-[clamp(2.75rem,6.5vw,6.5rem)] leading-[0.92] tracking-[-0.03em]">
             <span className="sr-only">
               {stay.label}, {stay.name}
             </span>
             <span className="block overflow-hidden pb-[0.1em]">
-              <SplitChars text={stay.label} show delay={0.25} stagger={0.035} />
+              <SplitChars text={stay.label} delay={0.25} stagger={0.035} />
             </span>
           </h1>
-          <motion.p {...fadeUp(0.7)} className="font-display wonk mt-2 text-[clamp(1.25rem,2.2vw,1.9rem)] text-lagoon-soft italic">
+          <p style={entranceDelay(0.7)} className="font-display wonk mt-2 animate-rise text-[clamp(1.25rem,2.2vw,1.9rem)] text-lagoon-soft italic">
             {stay.name}
-          </motion.p>
+          </p>
         </div>
 
-        <motion.div
-          {...fadeUp(0.9)}
-          className="mt-10 flex flex-col gap-6 border-t border-sand/20 pt-6 lg:flex-row lg:items-end lg:justify-between"
+        <div
+          style={entranceDelay(0.9)}
+          className="mt-10 flex animate-rise flex-col gap-6 border-t border-sand/20 pt-6 lg:flex-row lg:items-end lg:justify-between"
         >
           <dl className="grid grid-cols-3 gap-x-4 gap-y-5 md:flex md:divide-x md:divide-sand/20">
             {details.map((detail) => (
@@ -112,7 +106,7 @@ export function StayHero({ stay }: { stay: Stay }) {
             Book this stay
             <ArrowIcon direction="down" className="h-4 w-4" />
           </SiteLink>
-        </motion.div>
+        </div>
       </motion.div>
     </section>
   );

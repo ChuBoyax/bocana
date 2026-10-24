@@ -19,7 +19,7 @@ import { formatHour, stayFacts, stays, type Stay } from "@/lib/stays";
 import { GuestCounters, PinIcon } from "./fields";
 import { RangeCalendar } from "./range-calendar";
 
-export function StepHeading({ eyebrow, title, children }: { eyebrow: string; title: string; children?: ReactNode }) {
+function StepHeading({ eyebrow, title, children }: { eyebrow: string; title: string; children?: ReactNode }) {
   return (
     <div className="mb-8">
       <p className="text-[11px] font-semibold tracking-[0.28em] text-lagoon uppercase">{eyebrow}</p>

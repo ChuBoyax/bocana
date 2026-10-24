@@ -164,7 +164,7 @@ function BookButton({
 }
 
 /** Label that rolls up on hover, swapping to the italic serif. */
-export function RollingLabel({ children }: { children: string }) {
+function RollingLabel({ children }: { children: string }) {
   return (
     <span className="relative block overflow-hidden">
       <span className="block transition-transform duration-500 ease-out-expo group-hover:-translate-y-full">{children}</span>

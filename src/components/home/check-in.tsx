@@ -122,13 +122,11 @@ function StepItem({
         active ? "md:opacity-100" : "md:opacity-25",
       )}
     >
-      <div className="relative mb-8 aspect-[4/3] overflow-hidden rounded-[24px] md:hidden">
-        {step.image ? (
+      {step.image && (
+        <div className="relative mb-8 aspect-[4/3] overflow-hidden rounded-[24px] md:hidden">
           <Image src={step.image.src} alt={step.image.alt} fill sizes="90vw" className="object-cover" />
-        ) : (
-          <CodeCard active />
-        )}
-      </div>
+        </div>
+      )}
       <span className="font-display text-outline text-[clamp(4rem,8vw,7rem)] leading-none [--outline:var(--color-jungle)]">
         {String(index + 1).padStart(2, "0")}
       </span>
@@ -138,32 +136,34 @@ function StepItem({
   );
 }
 
+/** The photos, each wiping up over the last as its step is reached; a step without one keeps the last in view. */
 function Frame({ active }: { active: number }) {
+  const shown = steps.findLastIndex((step, i) => i <= active && step.image);
+
   return (
     <div className="relative h-full overflow-hidden rounded-[32px] bg-jungle">
-      {steps.map((step, i) => (
-        <motion.div
-          key={step.title}
-          className="absolute inset-0"
-          style={{ zIndex: i }}
-          initial={false}
-          animate={{ clipPath: i <= active ? "inset(0% 0% 0% 0%)" : "inset(100% 0% 0% 0%)" }}
-          transition={{ duration: 1.1, ease: EASE_IN_OUT }}
-        >
-          <motion.div
-            className="absolute inset-0"
-            initial={false}
-            animate={{ scale: i === active ? 1 : 1.15 }}
-            transition={{ duration: 1.6, ease: EASE_IN_OUT }}
-          >
-            {step.image ? (
-              <Image src={step.image.src} alt={step.image.alt} fill sizes="45vw" className="object-cover" />
-            ) : (
-              <CodeCard active={i === active} />
-            )}
-          </motion.div>
-        </motion.div>
-      ))}
+      {steps.map(
+        (step, i) =>
+          step.image && (
+            <motion.div
+              key={step.title}
+              className="absolute inset-0"
+              style={{ zIndex: i }}
+              initial={false}
+              animate={{ clipPath: i <= active ? "inset(0% 0% 0% 0%)" : "inset(100% 0% 0% 0%)" }}
+              transition={{ duration: 1.1, ease: EASE_IN_OUT }}
+            >
+              <motion.div
+                className="absolute inset-0"
+                initial={false}
+                animate={{ scale: i === shown ? 1 : 1.15 }}
+                transition={{ duration: 1.6, ease: EASE_IN_OUT }}
+              >
+                <Image src={step.image.src} alt={step.image.alt} fill sizes="45vw" className="object-cover" />
+              </motion.div>
+            </motion.div>
+          ),
+      )}
 
       <div className="absolute inset-x-6 bottom-6 z-10 flex items-center gap-3">
         {steps.map((step, i) => (
@@ -177,23 +177,6 @@ function Frame({ active }: { active: number }) {
           </span>
         ))}
       </div>
-    </div>
-  );
-}
-
-function CodeCard({ active }: { active: boolean }) {
-  return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center gap-8 bg-jungle text-sand">
-      <div className="flex gap-4">
-        {[0, 1, 2, 3].map((dot) => (
-          <span
-            key={dot}
-            className={cn("h-5 w-5 rounded-full bg-lagoon-soft md:h-7 md:w-7", active && "animate-pulse-dot")}
-            style={{ animationDelay: `${dot * 0.25}s` }}
-          />
-        ))}
-      </div>
-      <p className="font-display px-8 text-center text-2xl italic md:text-3xl">Your code is in your application</p>
     </div>
   );
 }
